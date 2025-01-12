@@ -1,0 +1,19 @@
+{
+  "name": "project-one-shared-notification-models",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/project-one/shared/notification-models/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/project-one/shared/notification-models",
+        "main": "libs/project-one/shared/notification-models/src/index.ts",
+        "tsConfig": "libs/project-one/shared/notification-models/tsconfig.lib.json",
+        "assets": ["libs/project-one/shared/notification-models/*.md"]
+      }
+    }
+  }
+}

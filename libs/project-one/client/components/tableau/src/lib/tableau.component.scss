@@ -1,0 +1,64 @@
+
+.topZero {
+  top: 0;
+}
+
+.table-container {
+  overflow: auto;
+  height: 100%;
+}
+
+.tableSettings {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+tr {
+  user-select: none;
+}
+
+tr.entity-row:not(.detail-row):hover {
+  filter: brightness(0.9);
+}
+
+tr.entity-row-selected:not(.detail-row) {
+  filter: brightness(0.9);
+}
+
+// We don't want the text wrapping, keep on one line
+tr td:not(:last-child) {
+  white-space: nowrap;
+}
+
+// Gives fatter fingered users some extra tapping space for asc/dsc sorting
+tr th:not(:last-child) {
+  padding-left: 15px;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+.openMenuButton {
+  z-index: 10;
+}
+
+.hiddenOpenMenuButton {
+  position: absolute;
+  opacity: 0;
+  z-index: -10;
+  top: 24px;
+  left: 32px;
+}
+
+.mat-column-expand, .mat-column-action {
+  width: 80px;
+}
+
+.mat-column-expandedDetail {
+  position: relative;
+  padding-left: 0;
+  padding-right:0;
+  user-select: text;
+}

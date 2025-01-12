@@ -1,0 +1,8 @@
+@use '@uppy/core/dist/style.min.css' as core;
+@use '@uppy/dashboard/dist/style.min.css' as dashboard;
+
+:host { display: block; }
+
+:host ::ng-deep .uppy-Dashboard-poweredBy {
+  display: none;
+}

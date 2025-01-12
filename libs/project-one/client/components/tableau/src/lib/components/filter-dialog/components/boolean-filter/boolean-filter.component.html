@@ -1,0 +1,13 @@
+<!-- Boolean Form Field -->
+<mat-form-field>
+  <mat-label>Select</mat-label>
+  <mat-select [formControl]='formControl'>
+    <mat-option value="true" i18n>True</mat-option>
+    <mat-option value="false" i18n>False</mat-option>
+  </mat-select>
+  @if (formControl.hasError('required')) {
+    <mat-error>
+      A value is required.
+    </mat-error>
+  }
+</mat-form-field>

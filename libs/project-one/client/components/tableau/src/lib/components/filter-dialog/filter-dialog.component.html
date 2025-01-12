@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content class="mat-typography">
+  <form (ngSubmit)='close()'>
+    <lib-components-filter-dialog-base-filter [(value)]="filterValue" [filters]="getBaseFilters()"></lib-components-filter-dialog-base-filter>
+
+    @switch (data.filterType) {
+      @case ('int') {
+        <lib-components-filter-dialog-int-filter [(value)]="formValue"></lib-components-filter-dialog-int-filter>
+      }
+      @case ('string') {
+        <lib-components-filter-dialog-string-filter [(value)]="formValue"></lib-components-filter-dialog-string-filter>
+      }
+      @case ('date') {
+        <lib-components-filter-dialog-date-filter [(value)]="formValue"></lib-components-filter-dialog-date-filter>
+      }
+      @case ('boolean') {
+        <lib-components-filter-dialog-boolean-filter [(value)]="formValue"></lib-components-filter-dialog-boolean-filter>
+      }
+    }
+  </form>
+</mat-dialog-content>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-actions align="end">
+  <button mat-button *ngIf='hasActiveFilter' (click)='clearFilter()'>Clear Filter</button>
+  <span class='fill-space'></span>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button color='primary' (click)='close()'>Apply</button>
+</mat-dialog-actions>

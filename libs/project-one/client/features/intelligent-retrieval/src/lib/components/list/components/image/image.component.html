@@ -1,0 +1,8 @@
+<div *ngIf='dataUrl(); else noContent'>
+  <img mat-card-image [src]="dataUrl()" alt="Vector Image">
+</div>
+
+<ng-template #noContent>
+  <p>No Image</p>
+</ng-template>
+

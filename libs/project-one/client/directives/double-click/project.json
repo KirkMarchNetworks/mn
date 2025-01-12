@@ -1,0 +1,36 @@
+{
+  "name": "project-one-client-directives-double-click",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/project-one/client/directives/double-click/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/project-one/client/directives/double-click/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/project-one/client/directives/double-click/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/project-one/client/directives/double-click/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/project-one/client/directives/double-click/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

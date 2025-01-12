@@ -1,0 +1,15 @@
+<!-- Int Form Field -->
+<mat-form-field>
+  <mat-label>Value</mat-label>
+  <input matInput type="text" [formControl]='formControl'>
+  @if (formControl.hasError('required')) {
+    <mat-error>
+      A value is required.
+    </mat-error>
+  }
+  @if (formControl.hasError('pattern')) {
+    <mat-error>
+      The value can only be an integer.
+    </mat-error>
+  }
+</mat-form-field>

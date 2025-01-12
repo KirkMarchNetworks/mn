@@ -1,0 +1,7 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/project-one/client/ui/tailwind-preset",
+  "targets": {},
+  "tags": [],
+  "name": "tailwind-preset"
+}

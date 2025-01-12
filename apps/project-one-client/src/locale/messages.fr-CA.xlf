@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="8097439005142157572" datatype="html">
+        <source> Hello </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/project-one-client/src/app/app.component.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+        <target> Conjour </target>
+      </trans-unit>
+      <trans-unit id="542318893467572748" datatype="html">
+        <source>Welcome Back! Please login to your account using the form below.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/project-one/client/features/login/src/lib/login/login.component.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+        <target>Bonjour Monsieur! Please login to your account using the form below.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

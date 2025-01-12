@@ -1,0 +1,16 @@
+<div class="rootContainer">
+  <form [formGroup]="formGroup" (ngSubmit)="submit()">
+
+    <p class="mb-2">Which generative model to use for Intelligent Retrieval.</p>
+    <mat-form-field>
+      <mat-label>Generative Model</mat-label>
+      <mat-select [formControl]="formGroup.controls.generativeModel">
+        <mat-option [value]="GenerativeModelEnum.AmazonTitanEmbedImageV1">Amazon Titan Embed Image V1</mat-option>
+        <mat-option [value]="GenerativeModelEnum.GeminiOnePointFivePro">Gemini 1.5 Pro</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button i18n mat-raised-button color="primary" type="submit">Save</button>
+  </form>
+
+</div>
+

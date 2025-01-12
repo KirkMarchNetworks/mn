@@ -1,0 +1,10 @@
+<div class="customizer-handle" matTooltip="Drag me around"
+     cdkDrag (cdkDragStarted)="onDragStart($event)">
+  <button mat-fab (click)="openPanel(customizerPanel)">
+    <mat-icon aria-label="Example icon-button with a settings icon">settings</mat-icon>
+  </button>
+</div>
+
+<ng-template #customizerPanel>
+  <h1>HELLO WORLD</h1>
+</ng-template>

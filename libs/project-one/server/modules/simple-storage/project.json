@@ -1,0 +1,27 @@
+{
+  "name": "project-one-server-modules-simple-storage",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/project-one/server/modules/simple-storage/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/project-one/server/modules/simple-storage",
+        "tsConfig": "libs/project-one/server/modules/simple-storage/tsconfig.lib.json",
+        "packageJson": "libs/project-one/server/modules/simple-storage/package.json",
+        "main": "libs/project-one/server/modules/simple-storage/src/index.ts",
+        "assets": ["libs/project-one/server/modules/simple-storage/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/project-one/server/modules/simple-storage/jest.config.ts"
+      }
+    }
+  }
+}

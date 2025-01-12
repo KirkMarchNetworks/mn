@@ -1,0 +1,27 @@
+{
+  "name": "project-one-server-repos-user",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/project-one/server/repos/user/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/project-one/server/repos/user",
+        "tsConfig": "libs/project-one/server/repos/user/tsconfig.lib.json",
+        "packageJson": "libs/project-one/server/repos/user/package.json",
+        "main": "libs/project-one/server/repos/user/src/index.ts",
+        "assets": ["libs/project-one/server/repos/user/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/project-one/server/repos/user/jest.config.ts"
+      }
+    }
+  }
+}

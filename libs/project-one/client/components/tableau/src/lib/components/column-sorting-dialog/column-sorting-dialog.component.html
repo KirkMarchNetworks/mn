@@ -1,0 +1,39 @@
+<div>
+  <h2 mat-dialog-title class="mb-0">{{ title }}</h2>
+  <mat-dialog-content>
+    <div class='grid md:grid-cols-2 gap-2'>
+      <div class=''>
+        <span class="md:hidden pb-2">Define Columns to Display</span>
+        <span class="listHeaders hidden md:flex">Define Columns to Display</span>
+        <mat-selection-list class="listContainer">
+          <mat-checkbox class="selectAll" [checked]="allSelected()" [indeterminate]="isOneSelected()" (change)='allSelectionChanged($event)'>Select All</mat-checkbox>
+          @for(column of data.columns; track $index) {
+            <mat-list-option class="example-box" togglePosition="before" [selected]='isSelected(column)' (selectedChange)='selectionChanged($event, column)'>
+              {{column.header}}
+            </mat-list-option>
+          }
+        </mat-selection-list>
+      </div>
+      <div class=''>
+        <span class="md:hidden py-2">Arrange Defined Columns</span>
+        <span class="hidden md:flex listHeaders">Arrange Defined Columns</span>
+        <mat-list cdkDropList (cdkDropListDropped)="drop($event)" class="listContainer">
+          <mat-list-item *ngFor="let column of selectedColumns" class="example-box" cdkDrag>
+            <mat-icon matListItemIcon>drag_indicator</mat-icon>
+            {{ column.header }}
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-divider></mat-divider>
+
+  <mat-dialog-actions align="end">
+    <span class='fill-space'></span>
+    <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+    <button mat-button color='primary' (click)='close()'>Apply</button>
+  </mat-dialog-actions>
+
+</div>

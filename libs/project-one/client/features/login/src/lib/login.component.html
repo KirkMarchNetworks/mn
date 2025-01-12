@@ -1,0 +1,51 @@
+<!--
+  This component can be showed from the login route or within a dialog. The dialog login will appear
+  If the users session gets invalidated, when within the dialog, we hide the forgot password link
+  And display a slightly different message.
+-->
+<section class='rootContainer' [class.my-2]='withinDialog()'>
+  <div class="mb-2">
+    <h3 *ngIf='withinDialog(); else showWelcomeBack' i18n (click)='updatePass()'>
+      It seems your session is no longer valid, please re-login to fix that.
+    </h3>
+    <ng-template #showWelcomeBack>
+      <h3 i18n (click)='updatePass()'>Welcome Back! Please login to your account using the form below.</h3>
+    </ng-template>
+  </div>
+
+  <form [formGroup]='formGroup' (ngSubmit)='submit()'>
+    <div class='row'>
+      <mat-form-field>
+        <mat-label>Tenant Name</mat-label>
+        <input matInput autofocus [formControl]='formGroup.controls.tenantName'>
+        <mat-error *ngIf="formGroup.controls.tenantName.hasError('required')">
+          A tenant name is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Email or Username</mat-label>
+        <input #emailInput matInput [formControl]='formGroup.controls.emailOrUsername'>
+        <mat-error *ngIf="formGroup.controls.emailOrUsername.hasError('required')">
+          An email address or a username is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput [type]="showPassword() ? 'text' : 'password'" [formControl]='formGroup.controls.password'>
+        <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="showPassword()">
+          <mat-icon>{{showPassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="formGroup.controls.password.hasError('required')">
+          A password is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color='primary' type='submit'>Login</button>
+
+    <a *ngIf='!withinDialog()' class='float-end my-2' [routerLink]='forgotPasswordRoute' [queryParams]='queryParams()'>Forgot Password?</a>
+
+    <lib-simple-message [input]="message" class="mt-2"></lib-simple-message>
+
+  </form>
+</section>
+

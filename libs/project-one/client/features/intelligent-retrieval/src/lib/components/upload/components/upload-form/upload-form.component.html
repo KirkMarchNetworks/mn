@@ -1,0 +1,48 @@
+<mat-accordion>
+  <mat-expansion-panel [expanded]="panelOpenState()" (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Upload Options</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="formGroup" (ngSubmit)="submit()">
+      <mat-form-field >
+        <mat-label>Device Name</mat-label>
+        <mat-select [formControl]="formGroup.controls.deviceId">
+          <mat-option *ngFor="let device of devices()" [value]="device.id">{{ device.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>Camera Name</mat-label>
+        <mat-select [formControl]="formGroup.controls.channelId">
+          <mat-option *ngFor="let result of channels()" [value]="result.id">{{ result.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Timestamp</mat-label>
+        <mtx-datetimepicker #datetimePicker
+                            [type]="type"
+                            [mode]="mode"
+                            [multiYearSelector]="multiYearSelector"
+                            [startView]="startView"
+                            [twelvehour]="twentyFourHour"
+                            [timeInterval]="timeInterval"
+                            [touchUi]="touchUi"
+                            [timeInput]="timeInput">
+          <mtx-datetimepicker-actions>
+            <button mat-button mtxDatetimepickerClear>Clear</button>
+            <button mat-button mtxDatetimepickerCancel>Cancel</button>
+            <button mat-raised-button mtxDatetimepickerApply>Apply</button>
+          </mtx-datetimepicker-actions>
+        </mtx-datetimepicker>
+        <input [mtxDatetimepicker]="datetimePicker" (focus)="datetimePicker.open()" [formControl]="formGroup.controls.timestamp" matInput>
+        <mtx-datetimepicker-toggle [for]="datetimePicker" matSuffix></mtx-datetimepicker-toggle>
+        <mat-hint align="end">If no timestamp is entered, timestamp will default to creation time.</mat-hint>
+      </mat-form-field>
+
+      <button i18n mat-raised-button color="primary" type="submit">Apply</button>
+    </form>
+
+  </mat-expansion-panel>
+</mat-accordion>
+
+

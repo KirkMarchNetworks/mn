@@ -1,0 +1,12 @@
+<h2 class="text-center">{{ textDisplay }}</h2>
+
+<div class="flex items-center justify-center">
+  @if (spinnerMode) {
+    <mat-progress-spinner
+      [mode]="spinnerMode"
+      [value]="spinnerValue">
+    </mat-progress-spinner>
+  }
+</div>
+
+

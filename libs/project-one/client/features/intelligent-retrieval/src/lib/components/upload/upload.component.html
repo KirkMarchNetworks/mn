@@ -1,0 +1,32 @@
+<div class="rootContainer">
+  <h3 class="mb-2">
+    Upload the files which you would like added to Intelligent Retrieval.
+  </h3>
+  <div class="uploadContainer">
+    <lib-intelligent-retrieval-upload-form (formUpdated)="onFormUpdated($event)"></lib-intelligent-retrieval-upload-form>
+    <p *ngIf="this.formData() as data" class="my-2">
+      <strong>
+        Upload Metadata:
+      </strong>
+
+      Device:
+      <strong>
+        {{ data.device.name }},
+      </strong>
+
+      Channel:
+      <strong>
+        {{ data.channel.name }},
+      </strong>
+
+      Time:
+      <strong>
+        {{ data.timestamp || 'Upload creation time' }}
+      </strong>
+    </p>
+    <div class="mt-2">
+      <lib-tus-uploader [tusEndpoint]="tusEndpoint" [tusHeaderMetadata]="$any(tusHeaderMetadata())"></lib-tus-uploader>
+    </div>
+  </div>
+
+</div>

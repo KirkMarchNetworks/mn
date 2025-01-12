@@ -1,0 +1,14 @@
+<form [formGroup]='formGroup' (ngSubmit)='submit()'>
+  <mat-form-field>
+    <mat-label>Tenant Name</mat-label>
+    <input matInput autofocus [formControl]='formGroup.controls.tenantName'>
+    <mat-error *ngIf="formGroup.controls.tenantName.hasError('required')">
+      A tenant name is required.
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color='primary' type='submit'>Next</button>
+
+  <lib-simple-message [input]="message" class="mt-2"></lib-simple-message>
+
+</form>
+

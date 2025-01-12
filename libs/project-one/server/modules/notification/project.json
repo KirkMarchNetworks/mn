@@ -1,0 +1,27 @@
+{
+  "name": "project-one-server-modules-notification",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/project-one/server/modules/notification/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/project-one/server/modules/notification",
+        "tsConfig": "libs/project-one/server/modules/notification/tsconfig.lib.json",
+        "packageJson": "libs/project-one/server/modules/notification/package.json",
+        "main": "libs/project-one/server/modules/notification/src/index.ts",
+        "assets": ["libs/project-one/server/modules/notification/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/project-one/server/modules/notification/jest.config.ts"
+      }
+    }
+  }
+}

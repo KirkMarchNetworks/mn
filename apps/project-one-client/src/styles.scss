@@ -1,0 +1,51 @@
+/* You can add global styles to this file, and also import other style files */
+//@use 'styles/reboot';
+@use 'styles/themes';
+@use 'styles/colors';
+@use 'styles/grid';
+@use 'styles/helpers';
+@use 'styles/plugins';
+@use 'styles/custom';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// See link below for why this is needed
+// https://github.com/tailwindlabs/tailwindcss/discussions/9993#discussioncomment-6752435_
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field
+.mdc-notched-outline__notch {
+  border-right-style: hidden;
+}
+.mat-mdc-input-element {
+  box-shadow: none !important;
+}
+
+.rootContainer {
+  height: 100%;
+  @apply container pt-4;
+}
+
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.mat-mdc-dialog-container .mat-mdc-dialog-title + .mat-mdc-dialog-content {
+  padding-top: 10px !important;
+}
+// We should update this to respect light and dark theme
+.active-link {
+  font-weight: bold;
+  backdrop-filter: brightness(90%);
+}

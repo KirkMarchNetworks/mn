@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  db:
+    image: ankane/pgvector
+    restart: always
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+    ports:
+      - '${DATABASE_PORT}:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '${CACHE_PORT}:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes:
+      - cache:/data
+  mail:
+    image: axllent/mailpit
+    restart: unless-stopped
+    environment:
+      - MP_DATA_FILE=/data/mailpit.db
+      - MP_UI_AUTH=${MAIL_USER}:${MAIL_PASSWORD}
+    ports:
+      - '${MAIL_PORT_1}:8025'
+      - '${MAIL_PORT_2}:1025'
+    volumes:
+      - mail:/data
+  minio:
+    image: docker.io/bitnami/minio:2024
+    restart: unless-stopped
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+      - MINIO_DEFAULT_BUCKETS=${MINIO_DEFAULT_BUCKETS}
+    ports:
+      - '${MINIO_PORT_1}:9000'
+      - '${MINIO_PORT_2}:9001'
+    volumes:
+      - minio:/bitnami/minio/data
+  companion:
+    image: transloadit/companion
+    environment:
+      - COMPANION_DATADIR=/mnt/uppy-server-data
+      - COMPANION_DOMAIN=localhost:3020
+      - COMPANION_PROTOCOL=http
+      - COMPANION_PORT=3020
+      - COMPANION_CLIENT_ORIGINS=true
+      - COMPANION_SECRET=development
+      - COMPANION_PREAUTH_SECRET=development2
+      - COMPANION_STREAMING_UPLOAD=true
+      - COMPANION_ALLOW_LOCAL_URLS=true
+      - COMPANION_ENABLE_URL_ENDPOINT=true
+      - COMPANION_AWS_KEY=${SIMPLE_STORAGE_KEY}
+      - COMPANION_AWS_SECRET=${SIMPLE_STORAGE_SECRET}
+      - COMPANION_AWS_BUCKET=${SIMPLE_STORAGE_TMP_BUCKET}
+      - COMPANION_AWS_REGION=${SIMPLE_STORAGE_REGION}
+      - COMPANION_AWS_PREFIX=test
+    build:
+      context: .
+      dockerfile: docker-companion-file
+    volumes:
+      - /app/node_modules
+      - companion:/mnt/uppy-server-data
+    ports:
+      - '${COMPANION_PORT}:3020'
+volumes:
+  db:
+    driver: local
+  cache:
+    driver: local
+  mail:
+    driver: local
+  minio:
+    driver: local
+  companion:
+    driver: local

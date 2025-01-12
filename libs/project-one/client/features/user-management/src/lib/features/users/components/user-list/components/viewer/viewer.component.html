@@ -1,0 +1,17 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title i18n class='my-3'>Permissions:</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @for (item of data.role.permissions; track $index;) {
+      <p [class.mb-2]="$last">{{ item.permissionName }}</p>
+    }
+    <mat-divider></mat-divider>
+  </mat-card-content>
+
+  <mat-card-actions align='end'>
+    <button i18n mat-button *ngIf='data.enabled'>VIEW</button>
+  </mat-card-actions>
+
+</mat-card>

@@ -1,0 +1,80 @@
+<div class="rootContainer">
+  <section>
+    <h4>Theme</h4>
+    <mat-button-toggle-group [formControl]="themeFormControl" aria-label="Theme">
+      @for (theme of themeOptions; track $index) {
+        <mat-button-toggle [value]="theme">{{theme}}</mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  </section>
+
+  <section>
+    <h4>Direction</h4>
+    <mat-button-toggle-group [formControl]="directionFormControl" aria-label="Direction">
+      @for (direction of directionOptions; track $index) {
+        <mat-button-toggle [value]="direction">{{direction}}</mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  </section>
+
+  <section class="my-4">
+
+    <form [formGroup]='layoutNavigationFormGroup'>
+      <h3 class="mb-3"><strong>Navigation Options</strong></h3>
+
+      <div>
+        <h4>Navigation Position</h4>
+        <mat-radio-group [formControl]="layoutNavigationFormGroup.controls.position">
+          <mat-radio-button class="example-radio-button" [value]="sidenavNavPositionSide">Side</mat-radio-button>
+          <mat-radio-button class="example-radio-button" [value]="sidenavNavPositionTop">Top</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div>
+        <h4>Show User Panel</h4>
+        <mat-radio-group [formControl]="layoutNavigationFormGroup.controls.showUserPanel">
+          <mat-radio-button class="example-radio-button" [value]="true">True</mat-radio-button>
+          <mat-radio-button class="example-radio-button" [value]="false">False</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div>
+        <h4>Allow Multiple Open Menu Items At Once</h4>
+        <mat-radio-group [formControl]="layoutNavigationFormGroup.controls.allowMultipleExpanded">
+          <mat-radio-button class="example-radio-button" [value]="true">True</mat-radio-button>
+          <mat-radio-button class="example-radio-button" [value]="false">False</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </form>
+
+    <form [formGroup]='layoutHeaderFormGroup'>
+      <h3 class="mb-3"><strong>Header Options</strong></h3>
+
+      <div>
+        <h4>Header Visible</h4>
+        <mat-radio-group [formControl]="layoutHeaderFormGroup.controls.visible">
+          <mat-radio-button class="example-radio-button" [value]="true">True</mat-radio-button>
+          <mat-radio-button class="example-radio-button" [value]="false">False</mat-radio-button>
+        </mat-radio-group>
+
+        <h4>Header Position</h4>
+        <mat-radio-group [formControl]="layoutHeaderFormGroup.controls.position">
+          <mat-radio-button class="example-radio-button" [value]="headerPositionFixed">Fixed</mat-radio-button>
+          <mat-radio-button class="example-radio-button" [value]="headerPositionStatic">Static</mat-radio-button>
+          <mat-radio-button class="example-radio-button" [value]="headerPositionAbove">Above</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+<!--      <div>-->
+<!--        <h4>Allow Multiple Open Menu Items At Once</h4>-->
+<!--        <mat-radio-group [formControl]="layoutHeaderFormGroup.controls.allowMultipleExpanded">-->
+<!--          <mat-radio-button class="example-radio-button" [value]="true">True</mat-radio-button>-->
+<!--          <mat-radio-button class="example-radio-button" [value]="false">False</mat-radio-button>-->
+<!--        </mat-radio-group>-->
+<!--      </div>-->
+
+
+    </form>
+  </section>
+</div>
+

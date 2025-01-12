@@ -1,0 +1,27 @@
+{
+  "name": "project-one-server-exceptions",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/project-one/server/exceptions/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/project-one/server/exceptions",
+        "tsConfig": "libs/project-one/server/exceptions/tsconfig.lib.json",
+        "packageJson": "libs/project-one/server/exceptions/package.json",
+        "main": "libs/project-one/server/exceptions/src/index.ts",
+        "assets": ["libs/project-one/server/exceptions/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/project-one/server/exceptions/jest.config.ts"
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<div>
+  <form [formGroup]="formGroup" (ngSubmit)="submit()">
+    <mat-form-field subscriptSizing="dynamic" class="my-2">
+      <mat-label i18n>Search Query</mat-label>
+      <input #input
+             type="text"
+             placeholder="Person on a bike?"
+             matInput
+             [formControl]="formGroup.controls.query"
+             [matAutocomplete]="auto"
+             (input)="filter()"
+             (focus)="filter()">
+      <mat-autocomplete requireSelection #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptions()" [value]="option">{{option.originalQuery}}</mat-option>
+      </mat-autocomplete>
+
+<!--      <button-->
+<!--        mat-icon-button-->
+<!--        matSuffix-->
+<!--        type="button"-->
+<!--      >-->
+<!--        <mat-icon>mic</mat-icon>-->
+<!--      </button>-->
+
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+      >
+        <mat-icon>upload</mat-icon>
+      </button>
+    </mat-form-field>
+
+  </form>
+</div>
+

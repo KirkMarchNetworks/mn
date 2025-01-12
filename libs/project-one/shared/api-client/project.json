@@ -1,0 +1,19 @@
+{
+  "name": "project-one-shared-api-client",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/project-one/shared/api-client/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/project-one/shared/api-client",
+        "main": "libs/project-one/shared/api-client/src/index.ts",
+        "tsConfig": "libs/project-one/shared/api-client/tsconfig.lib.json",
+        "assets": ["libs/project-one/shared/api-client/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

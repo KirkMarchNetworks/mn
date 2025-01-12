@@ -1,0 +1,60 @@
+<div class="app-container-wrap"
+     [class.app-sidenav-collapsed]="sideNavCollapsed() && (navPosition() !== 'top')"
+     [class.app-navbar-side]="navPosition() === 'side'"
+     [class.app-navbar-top]="navPosition() === 'top'"
+     [class.app-header-above]="headerPosition() === 'above'"
+     [class.app-header-fixed]="headerPosition() === 'fixed'"
+     [dir]="(direction$ | async) || 'ltr'">
+
+  <!-- Header Above -->
+  @if ((headerVisible$ | async) && headerPosition() === 'above') {
+    <app-header
+      [title]="title$ | async"
+      (toggleSidenav)="sidenav.toggle()"
+      (toggleSidenavNotice)="sidenavNotice.toggle()"
+      [showBranding]="false" />
+  }
+
+  <mat-sidenav-container class="app-container" autosize autoFocus>
+    <mat-sidenav #sidenav class="app-sidenav"
+                 [mode]="isOver() ? 'over' : 'side'"
+                 [opened]="navPosition() === 'side' && sideNavOpened() && !isOver()"
+                 (openedChange)="onSidenavOpenedChange($event)"
+                 (closedStart)="onSidenavClosedStart()">
+      <lib-root-sidebar
+        [showToggle]="!isOver()"
+        [showUser]="(showUserPanel$ | async) || false"
+        [showHeader]="headerPosition() !== 'above'"
+        [toggleChecked]="sideNavCollapsed()"
+        (toggleCollapsed)="toggleCollapsed()"
+        (closeSidenav)="sidenav.close()" />
+    </mat-sidenav>
+
+    <mat-sidenav #sidenavNotice position="end" mode="over">
+      <app-sidebar-notice />
+    </mat-sidenav>
+
+    <mat-sidenav-content #content class="app-content">
+      @if ((headerVisible$ | async)  && headerPosition() !== 'above') {
+        <app-header
+          [title]="title$ | async"
+          [showToggle]="!sideNavCollapsed() && navPosition() !== 'top'"
+          [showBranding]="navPosition() === 'top'"
+          [showBrandingSmall]="true"
+          (toggleSidenav)="sidenav.toggle()"
+          (toggleSidenavNotice)="sidenavNotice.toggle()" />
+      }
+
+      @if (navPosition() === 'top') {
+        <app-topmenu />
+      }
+
+      <main class="app-page-content">
+        <router-outlet />
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <!-- Demo purposes only -->
+  <app-customizer />
+</div>

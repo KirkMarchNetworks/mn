@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../../../dist/libs/project-one/client/services/title",
+  "lib": {
+    "entryFile": "src/index.ts"
+  }
+}

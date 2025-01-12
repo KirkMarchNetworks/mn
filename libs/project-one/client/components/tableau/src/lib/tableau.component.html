@@ -1,0 +1,242 @@
+<div *ngIf='tableau' class="h-full">
+  <div [class.topZero]="topZero" class='h-full flex flex-col mat-elevation-z8'>
+    <div class='px-2 flex align-items-center items-center'>
+      <ng-template #topBar>
+
+      </ng-template>
+
+      <ng-container *ngIf="tableau.filters.showDefault">
+        <ng-container *ngIf='filters$ | async as filters'>
+          <div *ngIf='filters.length as length' class='flex align-items-center items-center'>
+            <p class='filters mb-0' i18n>
+              {{ length }} Active filter{{ length > 1 ? 's' : '' }}
+            </p>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)='showFilterBubbles = !showFilterBubbles'>
+                <mat-icon fontSet='material-icons-outlined'>filter_alt_outline</mat-icon>
+                <span>{{ showFilterBubbles ? 'Hide' : 'Show' }} Filters</span>
+              </button>
+              <button mat-menu-item (click)='removeAllFilters()'>
+                <mat-icon fontSet='material-icons-outlined'>delete_sweep</mat-icon>
+                <span>Remove all filters</span>
+              </button>
+              <button mat-menu-item disabled>
+                <mat-icon>voicemail</mat-icon>
+                <span>Check voice mail</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>notifications_off</mat-icon>
+                <span>Disable alerts</span>
+              </button>
+            </mat-menu>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <span class='grow'></span>
+
+      <div class="tableSettings order-last">
+        <ng-template #extraMenuItemStart>
+
+        </ng-template>
+
+        <button mat-icon-button
+                i18n-matTooltip
+                i18n-aria-label
+                matTooltip='Table Settings'
+                aria-label='Table Settings'>
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button
+                (click)='triggerRefresh()'
+                i18n-matTooltip
+                i18n-aria-label
+                matTooltip='Refresh Results'
+                aria-label='Refresh Results'>
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button
+                (click)='openColumnSorter()'
+                i18n-matTooltip
+                i18n-aria-label
+                matTooltip="Reorder columns"
+                aria-label='Reorder columns'>
+          <mat-icon>reorder</mat-icon>
+        </button>
+
+
+        <ng-template #extraMenuItemEnd>
+
+        </ng-template>
+      </div>
+
+    </div>
+
+    <ng-template #bottomBar>
+
+    </ng-template>
+
+    <ng-container *ngIf="tableau.filters.showDefault">
+      <div class='px-2' *ngIf='filters$ | async as filters' [hidden]='!showFilterBubbles'>
+        <mat-chip-listbox class='py-1' aria-label="Filter list">
+          <mat-chip *ngFor="let filter of filters" (removed)="removeFilter(filter)" [matTooltip]='filter.filter ? filter.filter : ""'>
+            {{filter.field}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-listbox>
+      </div>
+    </ng-container>
+
+
+    <div #tableContainer class='h-full overflow-x-auto' *ngLet='tableau.data$ | async as data'>
+      <table mat-table multiTemplateDataRows *ngLet='sort$ | async as sort' [dataSource]='data' [trackBy]='trackTask'
+             matSort [matSortActive]='sort.active' [matSortDirection]='sort.direction'
+             #table='matTable'>
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef='selectHeader' sticky>
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)='$event ? toggleAllRows(data) : null'
+                          [checked]='selection.hasValue() && isAllSelected(data)'
+                          [indeterminate]='selection.hasValue() && !isAllSelected(data)'>
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef='let row'>
+            <mat-checkbox (click)='$event.stopPropagation()'
+                          (change)='$event ? selection.toggle(row) : null'
+                          [checked]='selection.isSelected(row)'>
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container *ngFor='let column of tableau.columns' [matColumnDef]='column.columnDef'>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]='!isSortable(column)'>
+            <span>{{column.header}}</span>
+            <button mat-icon-button
+                    *ngIf='isFilterable(column)'
+                    (click)='openFilterDialog($event, column)'
+                    aria-label='Example icon button with a vertical three dot icon'>
+              <ng-container *ngLet='activeFilter(column) | async as active'>
+                <mat-icon *ngIf='active'>filter_alt_outline</mat-icon>
+                <mat-icon *ngIf='!active' fontSet='material-icons-outlined'>filter_alt_outline</mat-icon>
+              </ng-container>
+            </button>
+          </th>
+
+          <td mat-cell *matCellDef='let row' [matTooltip]='column.cell(row)' [matTooltipDisabled]='rowHasTooltipDisabled(column, row)' matTooltipPosition="above">
+
+            <div class="flex align-items-center" *ngIf="!column.cellComponent; else showCellComponent">
+              <mat-icon class="me-2" *ngIf="getIconName(column, row) as icon">{{ icon }}</mat-icon>
+              <span>{{ getCellDisplay(column, row) }}</span>
+            </div>
+
+            <ng-template #showCellComponent>
+              <ng-template *ngComponentOutlet="$any(column.cellComponent!.component); inputs: { data: column.cellComponent!.input(row) }" />
+            </ng-template>
+
+          </td>
+
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail" *ngIf='displayedColumns$ | async as displayedColumns'>
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div [@detailVerticalExpand]="(expandedElement$ | async) === element ? 'expanded' : 'collapsed'">
+              <div style="visibility: hidden">
+                <ng-template libHiddenExpandHost></ng-template>
+              </div>
+              <div style="position: absolute; top: 0">
+                <ng-template libExpandHost></ng-template>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expand" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+          <td mat-cell *matCellDef="let element; let i = dataIndex">
+            <button mat-icon-button aria-label="expand row" (click)="handleExpand($event, element, i)">
+              <mat-icon *ngIf="(expandedElement$ | async) === element; else arrowDown">keyboard_arrow_up</mat-icon>
+              <ng-template #arrowDown>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+              </ng-template>
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef='actionHeader' stickyEnd>
+          <th mat-header-cell *matHeaderCellDef aria-label='row actions'>&nbsp;</th>
+          <td mat-cell *matCellDef='let element; let i = dataIndex'>
+            <div>
+              <button mat-icon-button
+                      class="openMenuButton"
+                      (click)="openMoreMenu($event, element, i)"
+                      aria-label='Example icon button with a vertical three dot icon'>
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <!-- We want this button to sit exactly behind the above button as our code uses this menuTrigger -->
+              <button class="hiddenOpenMenuButton" [matMenuTriggerFor]="moreMenu"
+                      #moreMenuTrigger="matMenuTrigger"
+                      aria-label='Example icon button with a vertical three dot icon'>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container *ngIf='displayedColumns$ | async as displayedColumns'>
+          <tr mat-header-row *matHeaderRowDef='displayedColumns; sticky: true'></tr>
+          <tr mat-row
+              class="entity-row"
+              [class.entity-row-selected]="selection.isSelected(row)"
+              *matRowDef='let row; columns: displayedColumns; let dataIndex = dataIndex'
+              libDoubleClick
+              (singleClick)="onSingleClick({ ev: $event, entity: row, dataIndex })"
+              (doubleClick)="onDoubleClick({ ev: $event, entity: row, dataIndex })"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+          <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
+          <tr *matNoDataRow>
+            <td class="p-4" [attr.colspan]='displayedColumns.length'>
+              {{ (tableau.loadingResults$ | async) ? 'Loading...' : 'No results were found.' }}
+            </td>
+          </tr>
+        </ng-container>
+
+
+      </table>
+    </div>
+
+    <span class='grow'></span>
+
+    <mat-paginator class='mat-paginator-sticky'
+                   [hidden]="!tableau.showPaginator"
+                   aria-label='Select page of search results'
+                   [length]='resultsLength$ | async'
+                   [showFirstLastButtons]="tableau.showFirstLastButtons"
+                   [pageIndex]='pageIndex'
+                   [pageSizeOptions]='tableau.pageSizeOptions'
+                   [pageSize]='tableau.pageSize'></mat-paginator>
+
+    <mat-menu #moreMenu='matMenu'>
+      <ng-template #moreMenuHost matMenuContent let-item='item'>
+
+        <ng-container *ngFor='let action of tableau.actions'>
+          <a mat-menu-item *ngIf='!action.show || action.show(item)'
+             (click)='action.action ? action.action(item) : false'
+             [routerLink]='action.route ? action.route(item) : undefined'>
+            {{ action.title(item) }}
+          </a>
+        </ng-container>
+      </ng-template>
+    </mat-menu>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,27 @@
+{
+  "name": "project-one-server-repos-repo-one-extensions",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/project-one/server/repos/_repo-one-extensions/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/project-one/server/repos/_repo-one-extensions",
+        "tsConfig": "libs/project-one/server/repos/_repo-one-extensions/tsconfig.lib.json",
+        "packageJson": "libs/project-one/server/repos/_repo-one-extensions/package.json",
+        "main": "libs/project-one/server/repos/_repo-one-extensions/src/index.ts",
+        "assets": ["libs/project-one/server/repos/_repo-one-extensions/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/project-one/server/repos/_repo-one-extensions/jest.config.ts"
+      }
+    }
+  }
+}

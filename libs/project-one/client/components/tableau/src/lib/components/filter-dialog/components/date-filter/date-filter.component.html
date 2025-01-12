@@ -1,0 +1,27 @@
+<!-- Date Form Field -->
+<mat-form-field>
+  <mat-label>Choose a date</mat-label>
+  <mtx-datetimepicker #datetimePicker
+                      [type]="type"
+                      [mode]="mode"
+                      [multiYearSelector]="multiYearSelector"
+                      [startView]="startView"
+                      [twelvehour]="twelveHour"
+                      [timeInterval]="timeInterval"
+                      [touchUi]="touchUi"
+                      [timeInput]="timeInput">
+    <mtx-datetimepicker-actions>
+      <button mat-button mtxDatetimepickerClear>Clear</button>
+      <button mat-button mtxDatetimepickerCancel>Cancel</button>
+      <button mat-raised-button mtxDatetimepickerApply>Apply</button>
+    </mtx-datetimepicker-actions>
+  </mtx-datetimepicker>
+  <input [mtxDatetimepicker]="datetimePicker" (focus)="datetimePicker.open()" [formControl]="formControl" matInput>
+  <mtx-datetimepicker-toggle [for]="datetimePicker" matSuffix></mtx-datetimepicker-toggle>
+  <mat-hint>YYYY/MM/DD HH:MM</mat-hint>
+  @if (formControl.hasError('required')) {
+    <mat-error>
+      A value is required.
+    </mat-error>
+  }
+</mat-form-field>

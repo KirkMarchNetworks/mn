@@ -1,0 +1,247 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@mn/project-one/client/components/confirm-dialog": [
+        "libs/project-one/client/components/confirm-dialog/src/index.ts"
+      ],
+      "@mn/project-one/client/components/progress-spinner": [
+        "libs/project-one/client/components/progress-spinner/src/index.ts"
+      ],
+      "@mn/project-one/client/components/simple-message": [
+        "libs/project-one/client/components/simple-message/src/index.ts"
+      ],
+      "@mn/project-one/client/components/tableau": [
+        "libs/project-one/client/components/tableau/src/index.ts"
+      ],
+      "@mn/project-one/client/components/tus-uploader": [
+        "libs/project-one/client/components/tus-uploader/src/index.ts"
+      ],
+      "@mn/project-one/client/directives/double-click": [
+        "libs/project-one/client/directives/double-click/src/index.ts"
+      ],
+      "@mn/project-one/client/directives/shared": [
+        "libs/project-one/client/directives/_shared/src/index.ts"
+      ],
+      "@mn/project-one/client/features/about": [
+        "libs/project-one/client/features/about/src/index.ts"
+      ],
+      "@mn/project-one/client/features/account": [
+        "libs/project-one/client/features/account/src/index.ts"
+      ],
+      "@mn/project-one/client/features/forgot-password": [
+        "libs/project-one/client/features/forgot-password/src/index.ts"
+      ],
+      "@mn/project-one/client/features/intelligent-retrieval": [
+        "libs/project-one/client/features/intelligent-retrieval/src/index.ts"
+      ],
+      "@mn/project-one/client/features/login": [
+        "libs/project-one/client/features/login/src/index.ts"
+      ],
+      "@mn/project-one/client/features/logout": [
+        "libs/project-one/client/features/logout/src/index.ts"
+      ],
+      "@mn/project-one/client/features/main": [
+        "libs/project-one/client/features/main/src/index.ts"
+      ],
+      "@mn/project-one/client/features/settings": [
+        "libs/project-one/client/features/settings/src/index.ts"
+      ],
+      "@mn/project-one/client/features/super-admin": [
+        "libs/project-one/client/features/super-admin/src/index.ts"
+      ],
+      "@mn/project-one/client/features/user-management": [
+        "libs/project-one/client/features/user-management/src/index.ts"
+      ],
+      "@mn/project-one/client/guards": [
+        "libs/project-one/client/guards/src/index.ts"
+      ],
+      "@mn/project-one/client/interceptors": [
+        "libs/project-one/client/interceptors/src/index.ts"
+      ],
+      "@mn/project-one/client/models": [
+        "libs/project-one/client/models/src/index.ts"
+      ],
+      "@mn/project-one/client/providers": [
+        "libs/project-one/client/providers/src/index.ts"
+      ],
+      "@mn/project-one/client/repos/core": [
+        "libs/project-one/client/repos/core/src/index.ts"
+      ],
+      "@mn/project-one/client/repos/core-ui": [
+        "libs/project-one/client/repos/core-ui/src/index.ts"
+      ],
+      "@mn/project-one/client/root": [
+        "libs/project-one/client/_root/src/index.ts"
+      ],
+      "@mn/project-one/client/services/auth": [
+        "libs/project-one/client/services/auth/src/index.ts"
+      ],
+      "@mn/project-one/client/services/dialog": [
+        "libs/project-one/client/services/dialog/src/index.ts"
+      ],
+      "@mn/project-one/client/services/initialization": [
+        "libs/project-one/client/services/_initialization/src/index.ts"
+      ],
+      "@mn/project-one/client/services/menu": [
+        "libs/project-one/client/services/menu/src/index.ts"
+      ],
+      "@mn/project-one/client/services/routing": [
+        "libs/project-one/client/services/routing/src/index.ts"
+      ],
+      "@mn/project-one/client/services/title": [
+        "libs/project-one/client/services/title/src/index.ts"
+      ],
+      "@mn/project-one/server/configs": [
+        "libs/project-one/server/configs/src/index.ts"
+      ],
+      "@mn/project-one/server/decorators": [
+        "libs/project-one/server/decorators/src/index.ts"
+      ],
+      "@mn/project-one/server/dtos": [
+        "libs/project-one/server/dtos/src/index.ts"
+      ],
+      "@mn/project-one/server/entities": [
+        "libs/project-one/server/entities/src/index.ts"
+      ],
+      "@mn/project-one/server/events": [
+        "libs/project-one/server/events/src/index.ts"
+      ],
+      "@mn/project-one/server/exceptions": [
+        "libs/project-one/server/exceptions/src/index.ts"
+      ],
+      "@mn/project-one/server/guards": [
+        "libs/project-one/server/guards/src/index.ts"
+      ],
+      "@mn/project-one/server/middlewares": [
+        "libs/project-one/server/middlewares/src/index.ts"
+      ],
+      "@mn/project-one/server/models": [
+        "libs/project-one/server/models/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/auth": [
+        "libs/project-one/server/modules/auth/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/device-and-channel": [
+        "libs/project-one/server/modules/device-and-channel/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/email": [
+        "libs/project-one/server/modules/email/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/embedding": [
+        "libs/project-one/server/modules/embedding/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/file": [
+        "libs/project-one/server/modules/file/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/firebase": [
+        "libs/project-one/server/modules/firebase/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/health": [
+        "libs/project-one/server/modules/health/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/intelligent-retrieval": [
+        "libs/project-one/server/modules/intelligent-retrieval/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/license": [
+        "libs/project-one/server/modules/license/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/licensed-product": [
+        "libs/project-one/server/modules/licensed-product/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/notification": [
+        "libs/project-one/server/modules/notification/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/permission": [
+        "libs/project-one/server/modules/permission/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/queue": [
+        "libs/project-one/server/modules/queue/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/role": [
+        "libs/project-one/server/modules/role/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/root": [
+        "libs/project-one/server/modules/_root/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/simple-storage": [
+        "libs/project-one/server/modules/simple-storage/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/tenant": [
+        "libs/project-one/server/modules/tenant/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/tus": [
+        "libs/project-one/server/modules/tus/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/user": [
+        "libs/project-one/server/modules/user/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/web-socket": [
+        "libs/project-one/server/modules/web-socket/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/device-and-channel": [
+        "libs/project-one/server/repos/device-and-channel/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/intelligent-retrieval": [
+        "libs/project-one/server/repos/intelligent-retrieval/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/license": [
+        "libs/project-one/server/repos/license/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/licensed-product": [
+        "libs/project-one/server/repos/licensed-product/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/permission": [
+        "libs/project-one/server/repos/permission/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/repo-one": [
+        "libs/project-one/server/repos/_repo-one/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/repo-one-extensions": [
+        "libs/project-one/server/repos/_repo-one-extensions/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/role": [
+        "libs/project-one/server/repos/role/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/shared": [
+        "libs/project-one/server/repos/_shared/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/tenant": [
+        "libs/project-one/server/repos/tenant/src/index.ts"
+      ],
+      "@mn/project-one/server/repos/user": [
+        "libs/project-one/server/repos/user/src/index.ts"
+      ],
+      "@mn/project-one/server/schema-one": [
+        "libs/project-one/server/schema-one/src/index.ts"
+      ],
+      "@mn/project-one/shared/api-client": [
+        "libs/project-one/shared/api-client/src/index.ts"
+      ],
+      "@mn/project-one/shared/models": [
+        "libs/project-one/shared/models/src/index.ts"
+      ],
+      "@mn/project-one/shared/notification-models": [
+        "libs/project-one/shared/notification-models/src/index.ts"
+      ],
+      "@mn/project-one/shared/sort-search-page": [
+        "libs/project-one/shared/sort-search-page/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
