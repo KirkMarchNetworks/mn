@@ -4,6 +4,7 @@ import { routeCreator } from '../models/route-creator';
 // TODO: Make ServerRouting an independent module, along with ClientRouting to save from Nx refreshes
 export const ServerRouting: ServerRoutingInterface = {
   globalPrefix: routeCreator('api'),
+  apiDocs: routeCreator('api-docs', () => ServerRouting.globalPrefix.absolutePath()),
 
   health: routeCreator('health', () => ServerRouting.globalPrefix.absolutePath()),
 
@@ -76,6 +77,12 @@ export const ServerRouting: ServerRoutingInterface = {
       imageSearch: routeCreator('image-search', () => ServerRouting.intelligentRetrieval.absolutePath()),
       settings: routeCreator('settings', () => ServerRouting.intelligentRetrieval.absolutePath()),
       imageCount: routeCreator('image-count', () => ServerRouting.globalPrefix.absolutePath()),
+      events: {
+        ...routeCreator('events', () => ServerRouting.intelligentRetrieval.absolutePath()),
+        children: {
+          create: routeCreator('create', () => ServerRouting.intelligentRetrieval.children.events.absolutePath())
+        }
+      },
     }
   },
 

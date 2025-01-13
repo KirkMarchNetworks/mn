@@ -16,7 +16,7 @@ import { Transport, RedisOptions } from '@nestjs/microservices';
 
 @ApiTags(ServerRouting.health.capitalizedPath)
 @AuthAndRole(SuperAdminRoleId)
-@Controller(ServerRouting.health.path)
+@Controller(ServerRouting.health.absolutePath())
 export class HealthController {
   constructor(
     private health: HealthCheckService,

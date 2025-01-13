@@ -13,7 +13,7 @@ import { PaginationInterface, RoleEntitySearchable } from '@mn/project-one/share
 
 @ApiTags(ServerRouting.role.capitalizedPath)
 @Auth()
-@Controller(ServerRouting.role.path)
+@Controller(ServerRouting.role.absolutePath())
 export class RoleController {
   constructor(
     private service: RoleService

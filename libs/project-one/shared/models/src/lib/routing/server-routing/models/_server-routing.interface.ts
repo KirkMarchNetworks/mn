@@ -11,6 +11,7 @@ import { DeviceAndChannelRouteInterface } from './device-and-channel-route.inter
 
 export interface ServerRoutingInterface {
   globalPrefix: BaseRouteInterface;
+  apiDocs: BaseRouteInterface;
 
   tenant: TenantRouteInterface;
   license: LicenseRouteInterface;

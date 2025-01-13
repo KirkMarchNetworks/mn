@@ -29,6 +29,7 @@ model/channelImageWithDistanceEntity.ts
 model/confirmEmailRequestDto.ts
 model/createChannelRequestDto.ts
 model/createEvLicenseRequestDto.ts
+model/createIntelligentRetrievalEventRequestDto.ts
 model/createLicensedProductRequestDto.ts
 model/createRequestDto.ts
 model/createRoleRequestDto.ts
@@ -51,6 +52,7 @@ model/getAllDevicesAndChannelsResponseDto.ts
 model/healthControllerCheck200Response.ts
 model/healthControllerCheck200ResponseInfoValue.ts
 model/healthControllerCheck503Response.ts
+model/intelligentRetrievalEventEntity.ts
 model/intelligentRetrievalSettingsEntity.ts
 model/licenseEntity.ts
 model/licensedProductControllerCreate501Response.ts

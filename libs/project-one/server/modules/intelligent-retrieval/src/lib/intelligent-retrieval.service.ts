@@ -32,6 +32,8 @@ import { MultiUploadRootName } from './models/multi-upload-root-name';
 import { SearchQueryWithVectorType } from '@mn/project-one/server/repos/repo-one-extensions';
 import { UpdateSettingsRequestDto } from './dtos/update-settings-request.dto';
 import { IntelligentRetrievalSettingsEntity } from './entities/intelligent-retrieval-settings.entity';
+import { CreateIntelligentRetrievalEventRequestDto } from './modules/event/dtos/create-intelligent-retrieval-event-request.dto';
+import { IntelligentRetrievalEventEntity } from './modules/event/entities/intelligent-retrieval-event.entity';
 
 @Injectable()
 export class IntelligentRetrievalService {
@@ -265,6 +267,18 @@ export class IntelligentRetrievalService {
     const settings = await this.repo.updateSettings(tenantId, dto.generativeModel);
 
     return settings;
+  }
+
+  async createEvent(tenantId: string, dto: CreateIntelligentRetrievalEventRequestDto): Promise<IntelligentRetrievalEventEntity> {
+    const foundQuery = await this.repo.findPreviousQueryId(tenantId, dto.searchQueryId);
+
+    if (! foundQuery) {
+      throw new Error('Cannot find the query.');
+    }
+
+    const { name, similarityScore } = dto;
+
+    return await this.repo.updateEvents(tenantId, foundQuery.id, name, similarityScore);
   }
 
   async imageSearch(

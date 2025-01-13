@@ -10,7 +10,7 @@ import { Auth } from '@mn/project-one/server/guards';
 
 @ApiTags(ServerRouting.user.capitalizedPath)
 @Auth()
-@Controller(ServerRouting.user.path)
+@Controller(ServerRouting.user.absolutePath())
 export class UserController {
   constructor(
     private service: UserService,

@@ -1,4 +1,4 @@
-import { ClientRoutingInterface } from './models/client-routing.interface';
+import { ClientRoutingInterface } from './models/_client-routing.interface';
 import { routeCreator } from '../models/route-creator';
 
 export const ClientRouting: ClientRoutingInterface = {
@@ -49,6 +49,12 @@ export const ClientRouting: ClientRoutingInterface = {
     children: {
       search: routeCreator('search', () => ClientRouting.intelligentRetrieval.absolutePath()),
       upload: routeCreator('upload', () => ClientRouting.intelligentRetrieval.absolutePath()),
+      events: {
+        ...routeCreator('events', () => ClientRouting.intelligentRetrieval.absolutePath()),
+        children: {
+          create: routeCreator('create', () => ClientRouting.intelligentRetrieval.children.events.absolutePath()),
+        }
+      },
       settings: routeCreator('settings', () => ClientRouting.intelligentRetrieval.absolutePath()),
     }
   },

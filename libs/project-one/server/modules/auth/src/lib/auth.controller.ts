@@ -20,7 +20,7 @@ import { TenantId } from '@mn/project-one/server/decorators';
 
 
 @ApiTags(ServerRouting.auth.capitalizedPath)
-@Controller(ServerRouting.auth.path)
+@Controller(ServerRouting.auth.absolutePath())
 export class AuthController {
   constructor(
     private service: AuthService

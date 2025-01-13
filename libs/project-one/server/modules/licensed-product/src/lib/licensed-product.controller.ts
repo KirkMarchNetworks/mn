@@ -8,7 +8,7 @@ import { LicensedProductService } from './licensed-product.service';
 
 @ApiTags(ServerRouting.licensedProduct.capitalizedPath)
 @AuthAndRole(SuperAdminRoleId)
-@Controller(ServerRouting.licensedProduct.path)
+@Controller(ServerRouting.licensedProduct.absolutePath())
 export class LicensedProductController {
   constructor(
     private service: LicensedProductService

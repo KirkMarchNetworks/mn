@@ -8,7 +8,7 @@ import { LicenseService } from './license.service';
 
 @ApiTags(ServerRouting.license.capitalizedPath)
 @Auth()
-@Controller(ServerRouting.license.path)
+@Controller(ServerRouting.license.absolutePath())
 export class LicenseController {
   constructor(
     private service: LicenseService

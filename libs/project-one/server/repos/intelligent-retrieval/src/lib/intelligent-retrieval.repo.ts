@@ -8,8 +8,12 @@ import { ConfigType } from '@nestjs/config';
 import { AmazonTitanModelEnum } from './titan/amazon-titan-model.enum';
 import { GenerativeModelEnum, Prisma } from '@prisma/project-one/one';
 import { ChannelImageWithDistanceType } from './types/channel-image-with-distance.type';
-import { searchQuerySelect } from '@mn/project-one/server/repos/repo-one-extensions';
+import { searchQuerySelect, SearchQueryWithVectorType } from '@mn/project-one/server/repos/repo-one-extensions';
 import { intelligentRetrievalSettingsSelect } from './types/intelligent-retrieval-settings.type';
+import { intelligentRetrievalEventsSelect } from './types/intelligent-retrieval-events.type';
+import {
+  IntelligentRetrievalEventWithSearchQueryType
+} from './types/intelligent-retrieval-event-with-search-query.type';
 
 @Injectable()
 export class IntelligentRetrievalRepo {
@@ -86,6 +90,18 @@ export class IntelligentRetrievalRepo {
 
   async findPreviousQuery(tenantId: string, id: string) {
     return await this.repoOneService.extendedClient.searchQuery.getFirstSearchQuery(tenantId, id);
+  }
+
+  async findPreviousQueryId(tenantId: string, id: string) {
+    return await this.repoOneService.searchQuery.findFirst({
+      where: {
+        tenantId,
+        id
+      },
+      select: {
+        id: true
+      }
+    })
   }
 
   async findSimilar(tenantId: string, vector: number[], resultsToReturn: number) {
@@ -187,5 +203,26 @@ export class IntelligentRetrievalRepo {
       },
       select: intelligentRetrievalSettingsSelect
     })
+  }
+
+  async updateEvents(tenantId: string, searchQueryId: string, name: string, similarityScore: number) {
+    return await this.repoOneService.intelligentRetrievalEvents.upsert({
+      where: {
+        tenantId
+      },
+      create: {
+        tenantId,
+        name,
+        searchQueryId,
+        similarityScore
+      },
+      update: {
+        tenantId,
+        name,
+        searchQueryId,
+        similarityScore
+      },
+      select: intelligentRetrievalEventsSelect
+    });
   }
 }

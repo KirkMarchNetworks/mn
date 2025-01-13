@@ -12,7 +12,7 @@ import { TenantEntity } from './entities/tenant.entity';
 
 @ApiTags(ServerRouting.tenant.capitalizedPath)
 @AuthAndRole(SuperAdminRoleId)
-@Controller(ServerRouting.tenant.path)
+@Controller(ServerRouting.tenant.absolutePath())
 export class TenantController {
   constructor(
     private tenantService: TenantService

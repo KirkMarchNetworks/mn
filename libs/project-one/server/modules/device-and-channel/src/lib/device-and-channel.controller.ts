@@ -9,7 +9,7 @@ import { CreateChannelRequestDto } from './dtos/create-channel-request.dto';
 
 @ApiTags(ServerRouting.deviceAndChannel.capitalizedPath)
 @Auth()
-@Controller(ServerRouting.deviceAndChannel.path)
+@Controller(ServerRouting.deviceAndChannel.absolutePath())
 export class DeviceAndChannelController {
   constructor(
     private service: DeviceAndChannelService

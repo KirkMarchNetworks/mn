@@ -19,17 +19,22 @@ export const ROUTES: Route[] = [
         path: routes.children.search.path,
         pathMatch: 'full',
         title: 'Search',
-        loadComponent: () => import('./components/list/list.component').then(m => m.ListComponent)
+        loadComponent: () => import('./features/search/search.component').then(m => m.SearchComponent)
       },
       {
         path: routes.children.upload.path,
         title: `Upload`,
-        loadComponent: () => import('./components/upload/upload.component').then(m => m.UploadComponent)
+        loadComponent: () => import('./features/upload/upload.component').then(m => m.UploadComponent)
+      },
+      {
+        path: routes.children.events.path,
+        title: `Events`,
+        loadChildren: () => import('./features/events/events.routes').then(m => m.ROUTES)
       },
       {
         path: routes.children.settings.path,
         title: `Settings`,
-        loadComponent: () => import('./components/settings/settings.component').then(m => m.SettingsComponent)
+        loadComponent: () => import('./features/settings/settings.component').then(m => m.SettingsComponent)
       },
     ]
   },

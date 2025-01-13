@@ -18,9 +18,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  const globalPrefix = ServerRouting.globalPrefix.path;
-  app.setGlobalPrefix(globalPrefix);
-
   const openApiConfig = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('March Networks')
@@ -29,8 +26,8 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, openApiConfig, {});
-  SwaggerModule.setup(`api-docs`, app, document, {
-    useGlobalPrefix: true,
+  const apiDocsPath = ServerRouting.apiDocs.absolutePath();
+  SwaggerModule.setup(apiDocsPath, app, document, {
     swaggerOptions: {
       persistAuthorization: true,
     },
@@ -41,7 +38,11 @@ async function bootstrap() {
   await app.listen(port);
 
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Application is running on: http://localhost:${port}`
+  );
+
+  Logger.log(
+    `ApiDocs is running on: http://localhost:${port}${apiDocsPath}`
   );
 }
 

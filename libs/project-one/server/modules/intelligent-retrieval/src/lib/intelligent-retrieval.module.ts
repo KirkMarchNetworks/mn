@@ -7,6 +7,8 @@ import { ImageVectorQueueName, VectorImageProcessor } from './processors/vector-
 import { EmbeddingModule } from '@mn/project-one/server/modules/embedding';
 import { FileUploadedListener } from './listeners/file-uploaded.listener';
 import { IntelligentRetrievalRepoModule } from '@mn/project-one/server/repos/intelligent-retrieval';
+import { RouterModule } from '@nestjs/core';
+import { EventModule } from './modules/event/event.module';
 
 @Module({
   controllers: [IntelligentRetrievalController],
@@ -23,7 +25,9 @@ import { IntelligentRetrievalRepoModule } from '@mn/project-one/server/repos/int
     IntelligentRetrievalRepoModule,
 
     EmbeddingModule,
-    QueueModule.registerQueue(ImageVectorQueueName)
+    QueueModule.registerQueue(ImageVectorQueueName),
+
+    EventModule
   ]
 })
 export class IntelligentRetrievalModule {

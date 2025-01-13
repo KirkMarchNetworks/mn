@@ -11,5 +11,12 @@ export interface IntelligentRetrievalRouteInterface extends BaseRouteInterface {
     imageSearch: BaseRouteInterface,
     imageCount: BaseRouteInterface,
     settings: BaseRouteInterface,
+    events: EventRouteInterface,
+  }
+}
+
+interface EventRouteInterface extends BaseRouteInterface {
+  children: {
+    create: BaseRouteInterface,
   }
 }

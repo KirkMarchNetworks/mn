@@ -7,29 +7,6 @@ generator client {
   previewFeatures = ["postgresqlExtensions", "typedSql"]
 }
 
-// model FileClosure {
-//   ancestorId String
-//   descendantId String
-//   depth Int
-//
-//   ancestor File @relation("Ancestor", fields: [ancestorId], references: [id])
-//   descendant File @relation("Descendant", fields: [descendantId], references: [id])
-//
-//   @@id([ancestorId, descendantId])
-// }
-//
-// model File {
-//   id        String   @id @default(cuid())
-//   name      String
-//   path      String
-//   size      Int?
-//   mimeType  String
-//   ownerId   String
-//   owner     User     @relation(fields: [ownerId], references: [id])
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
-
 datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
@@ -49,6 +26,7 @@ model Tenant {
   createdAt                    DateTime                      @default(now())
   updatedAt                    DateTime                      @updatedAt
   deletedAt                    DateTime?
+  intelligentRetrievalEvents   IntelligentRetrievalEvents[]
 }
 
 model LicensedProduct {
@@ -155,17 +133,6 @@ model PermissionToRole {
   @@id([permissionName, roleId])
 }
 
-model SearchQuery {
-  id             String                 @id @default(cuid())
-  lowerCaseQuery String?
-  originalQuery  String?
-  fileName       String?
-  vector         Unsupported("vector")?
-  tenantId       String
-  tenant         Tenant                 @relation(fields: [tenantId], references: [id])
-  createdAt      DateTime               @default(now())
-}
-
 model Device {
   id        String    @id @default(cuid())
   name      String
@@ -196,6 +163,31 @@ model ChannelImage {
   channel         Channel                @relation(fields: [channelId], references: [id])
   generativeModel GenerativeModelEnum?
   createdAt       DateTime               @default(now())
+}
+
+model SearchQuery {
+  id             String                 @id @default(cuid())
+  lowerCaseQuery String?
+  originalQuery  String?
+  fileName       String?
+  vector         Unsupported("vector")?
+  tenantId       String
+  tenant         Tenant                 @relation(fields: [tenantId], references: [id])
+
+  events    IntelligentRetrievalEvents[]
+  createdAt DateTime                     @default(now())
+}
+
+model IntelligentRetrievalEvents {
+  id              String      @id @default(cuid())
+  tenantId        String      @unique
+  tenant          Tenant      @relation(fields: [tenantId], references: [id])
+  searchQueryId   String
+  searchQuery     SearchQuery @relation(fields: [searchQueryId], references: [id])
+  name            String
+  similarityScore Int
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 }
 
 model IntelligentRetrievalSettings {

@@ -96,6 +96,11 @@ const authenticatedMenu: () => Menu[] = () => [
         "type": "link"
       },
       {
+        "route": ClientRouting.intelligentRetrieval.children.events.absolutePath(),
+        "name": "Events",
+        "type": "link"
+      },
+      {
         "route": ClientRouting.intelligentRetrieval.children.settings.absolutePath(),
         "name": "Settings",
         "type": "link"

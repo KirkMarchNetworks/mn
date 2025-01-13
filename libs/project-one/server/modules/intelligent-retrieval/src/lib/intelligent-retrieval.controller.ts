@@ -23,10 +23,11 @@ import { SearchQuery, SearchQueryType } from './decorators/search-query.decorato
 import { CreateSearchTextQueryRequestDto } from './dtos/create-search-text-query-request.dto';
 import { ChannelImageWithDistanceEntity } from './entities/channel-image-with-distance.entity';
 import { UpdateSettingsRequestDto } from './dtos/update-settings-request.dto';
+import { CreateIntelligentRetrievalEventRequestDto } from './modules/event/dtos/create-intelligent-retrieval-event-request.dto';
 
 @ApiTags(ServerRouting.intelligentRetrieval.capitalizedPath)
 @Auth()
-@Controller(ServerRouting.intelligentRetrieval.path)
+@Controller(ServerRouting.intelligentRetrieval.absolutePath())
 export class IntelligentRetrievalController {
   constructor(
     private service: IntelligentRetrievalService
@@ -116,5 +117,12 @@ export class IntelligentRetrievalController {
   @Post(ServerRouting.intelligentRetrieval.children.settings.path)
   updateSettings(@TenantId() tenantId: string, @Body() dto: UpdateSettingsRequestDto) {
     return this.service.updateSettings(tenantId, dto);
+  }
+
+  @Permissions(PermissionNames.SearchImage)
+  @ApiOperation({ description: `Create a new Intelligent Retrieval Event.`})
+  @Post(ServerRouting.intelligentRetrieval.children.events.path)
+  createEvent(@TenantId() tenantId: string, @Body() dto: CreateIntelligentRetrievalEventRequestDto) {
+    return this.service.createEvent(tenantId, dto);
   }
 }
