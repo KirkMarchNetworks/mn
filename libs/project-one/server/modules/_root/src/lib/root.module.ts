@@ -23,11 +23,15 @@ import { WebSocketModule } from '@mn/project-one/server/modules/web-socket';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: config
+      load: config,
     }),
     BullModule.forRootAsync({
-      inject: [ redisConfig.KEY ],
-      useFactory: ({ host, port, password }: ConfigType<typeof redisConfig>) => ({
+      inject: [redisConfig.KEY],
+      useFactory: ({
+        host,
+        port,
+        password,
+      }: ConfigType<typeof redisConfig>) => ({
         connection: {
           host,
           port,
@@ -40,7 +44,7 @@ import { WebSocketModule } from '@mn/project-one/server/modules/web-socket';
             delay: 1000,
           },
         },
-      })
+      }),
     }),
     BullBoardModule.forRoot({
       route: '/queues',
@@ -48,7 +52,7 @@ import { WebSocketModule } from '@mn/project-one/server/modules/web-socket';
       middleware: BasicAuthMiddleware,
     }),
     EventEmitterModule.forRoot({
-      wildcard: true
+      wildcard: true,
     }),
     AuthModule,
     HealthModule,
@@ -62,6 +66,6 @@ import { WebSocketModule } from '@mn/project-one/server/modules/web-socket';
     FileModule,
     IntelligentRetrievalModule,
     DeviceAndChannelModule,
-  ]
+  ],
 })
 export class RootModule {}

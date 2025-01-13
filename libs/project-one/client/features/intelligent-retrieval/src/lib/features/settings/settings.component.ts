@@ -80,7 +80,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     if (this._intialValue !== generativeModel) {
       this._subscriptions.add(
-        this.service.updateSettings(this.formGroup.getRawValue()).subscribe()
+        this.service.upsertSettings(this.formGroup.getRawValue()).subscribe()
       );
     }
   }

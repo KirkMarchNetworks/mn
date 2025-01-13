@@ -7,6 +7,10 @@ api/deviceAndChannelApi.service.ts
 api/fileApi.service.ts
 api/healthApi.service.ts
 api/intelligentRetrievalApi.service.ts
+api/intelligentRetrievalEventsApi.service.ts
+api/intelligentRetrievalSearchQueryApi.service.ts
+api/intelligentRetrievalSettingsApi.service.ts
+api/intelligentRetrievalUploadApi.service.ts
 api/licenseApi.service.ts
 api/licensedProductApi.service.ts
 api/roleApi.service.ts
@@ -24,7 +28,6 @@ model/authControllerUpdateEmail400Response.ts
 model/authResponseDto.ts
 model/channel2Entity.ts
 model/channelEntity.ts
-model/channelImageEntity.ts
 model/channelImageWithDistanceEntity.ts
 model/confirmEmailRequestDto.ts
 model/createChannelRequestDto.ts
@@ -70,7 +73,6 @@ model/roleControllerDelete400Response.ts
 model/roleEntity.ts
 model/roleWithPermissionsEntity.ts
 model/searchQueryEntity.ts
-model/searchRequestDto.ts
 model/simpleResponseDto.ts
 model/tenantEntity.ts
 model/testRequestDto.ts

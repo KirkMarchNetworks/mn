@@ -9,6 +9,7 @@ import { LicensedProductService } from '@mn/project-one/server/modules/licensed-
 import { DeviceAndChannelService } from '@mn/project-one/server/modules/device-and-channel';
 import { IntelligentRetrievalService } from '@mn/project-one/server/modules/intelligent-retrieval';
 import { GenerativeModelEnum } from '@prisma/project-one/one';
+import { SettingsService as IntelligentRetrievalSettingsService } from '@mn/project-one/server/modules/intelligent-retrieval/settings';
 
 export const seeder = async (app: INestApplication) => {
   const tenantService = app.get(TenantService);
@@ -19,7 +20,9 @@ export const seeder = async (app: INestApplication) => {
   const roleService = app.get(RoleService);
   const permissionService = app.get(PermissionService);
   const deviceAndChannelService = app.get(DeviceAndChannelService);
+
   const intelligentRetrievalService = app.get(IntelligentRetrievalService);
+  const intelligentRetrievalSettingsService = app.get(IntelligentRetrievalSettingsService);
 
   console.log('seeding');
 
@@ -90,10 +93,9 @@ export const seeder = async (app: INestApplication) => {
       });
     }
 
-    await intelligentRetrievalService.updateSettings(
-      tenant1.id,
-      { generativeModel: GenerativeModelEnum.AmazonTitanEmbedImageV1 }
-    );
+    await intelligentRetrievalSettingsService.upsertSettings(tenant1.id, {
+      generativeModel: GenerativeModelEnum.AmazonTitanEmbedImageV1,
+    });
     const tenant1Device1 = await deviceAndChannelService.createDevice(
       tenant1.id,
       { name: 'Device 1' }

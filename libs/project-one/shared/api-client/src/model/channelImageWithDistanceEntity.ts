@@ -12,6 +12,10 @@ import { ChannelEntity } from './channelEntity';
 
 export interface ChannelImageWithDistanceEntity { 
     /**
+     * The vector distance from the search criteria. The closer the value is to 0, the closer it is to the search criteria.
+     */
+    distance: number | null;
+    /**
      * The I.D of the role.
      */
     id: string;
@@ -31,9 +35,5 @@ export interface ChannelImageWithDistanceEntity {
      * The timestamp of the image.
      */
     timestamp: string;
-    /**
-     * The vector distance from the search criteria. The closer the value is to 0, the closer it is to the search criteria.
-     */
-    distance: number | null;
 }
 

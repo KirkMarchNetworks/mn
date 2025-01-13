@@ -189,7 +189,7 @@ export class IntelligentRetrievalRepo {
     });
   }
 
-  async updateSettings(tenantId: string, generativeModel: GenerativeModelEnum) {
+  async upsertSettings(tenantId: string, generativeModel: GenerativeModelEnum) {
     return await this.repoOneService.intelligentRetrievalSettings.upsert({
       where: {
         tenantId

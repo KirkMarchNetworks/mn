@@ -70,17 +70,23 @@ export const ServerRouting: ServerRoutingInterface = {
     children: {
       getImage: routeCreator('get-image', () => ServerRouting.intelligentRetrieval.absolutePath()),
       upload: routeCreator('upload', () => ServerRouting.intelligentRetrieval.absolutePath()),
-      getSearchQueries: routeCreator('get-search-queries', () => ServerRouting.intelligentRetrieval.absolutePath()),
-      createSearchQuery: routeCreator('create-search-query', () => ServerRouting.intelligentRetrieval.absolutePath()),
-      multiUpload: routeCreator('multi-upload', () => ServerRouting.intelligentRetrieval.absolutePath()),
-      textSearch: routeCreator('text-search', () => ServerRouting.intelligentRetrieval.absolutePath()),
-      imageSearch: routeCreator('image-search', () => ServerRouting.intelligentRetrieval.absolutePath()),
-      settings: routeCreator('settings', () => ServerRouting.intelligentRetrieval.absolutePath()),
       imageCount: routeCreator('image-count', () => ServerRouting.globalPrefix.absolutePath()),
       events: {
         ...routeCreator('events', () => ServerRouting.intelligentRetrieval.absolutePath()),
         children: {
           create: routeCreator('create', () => ServerRouting.intelligentRetrieval.children.events.absolutePath())
+        }
+      },
+      searchQuery: {
+        ...routeCreator('search-query', () => ServerRouting.intelligentRetrieval.absolutePath()),
+        children: {
+          create: routeCreator('create', () => ServerRouting.intelligentRetrieval.children.searchQuery.absolutePath())
+        }
+      },
+      settings: {
+        ...routeCreator('settings', () => ServerRouting.intelligentRetrieval.absolutePath()),
+        children: {
+          upsert: routeCreator('upsert', () => ServerRouting.intelligentRetrieval.children.settings.absolutePath())
         }
       },
     }

@@ -155,7 +155,22 @@
         "libs/project-one/server/modules/health/src/index.ts"
       ],
       "@mn/project-one/server/modules/intelligent-retrieval": [
-        "libs/project-one/server/modules/intelligent-retrieval/src/index.ts"
+        "libs/project-one/server/modules/intelligent-retrieval/_root/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/intelligent-retrieval/event": [
+        "libs/project-one/server/modules/intelligent-retrieval/event/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/intelligent-retrieval/search-query": [
+        "libs/project-one/server/modules/intelligent-retrieval/search-query/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/intelligent-retrieval/settings": [
+        "libs/project-one/server/modules/intelligent-retrieval/settings/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/intelligent-retrieval/shared": [
+        "libs/project-one/server/modules/intelligent-retrieval/_shared/src/index.ts"
+      ],
+      "@mn/project-one/server/modules/intelligent-retrieval/upload": [
+        "libs/project-one/server/modules/intelligent-retrieval/upload/src/index.ts"
       ],
       "@mn/project-one/server/modules/license": [
         "libs/project-one/server/modules/license/src/index.ts"

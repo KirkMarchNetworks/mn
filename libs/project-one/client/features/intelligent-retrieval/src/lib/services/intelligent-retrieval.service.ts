@@ -9,9 +9,8 @@ import {
   ChannelImageWithDistanceEntity,
   CreateSearchTextQueryRequestDto,
   GenerativeModelEnum,
-  IntelligentRetrievalApiService,
-  SearchRequestDto,
-  UpdateSettingsRequestDto,
+  IntelligentRetrievalApiService, IntelligentRetrievalSearchQueryApiService, IntelligentRetrievalSettingsApiService,
+  UpdateSettingsRequestDto
 } from '@mn/project-one/shared/api-client';
 import { withPagination } from '@ngneat/elf-pagination';
 import { EMPTY, map, mergeMap, Observable, of, take, tap } from 'rxjs';
@@ -26,6 +25,9 @@ export class IntelligentRetrievalService extends TableauBaseService<ChannelImage
 
   private _dialogService = inject(DialogService);
   private _apiService = inject(IntelligentRetrievalApiService);
+  private _searchQueryService = inject(IntelligentRetrievalSearchQueryApiService);
+  private _settingsService = inject(IntelligentRetrievalSettingsApiService);
+
   private store;
 
   constructor(private service: IntelligentRetrievalApiService) {
@@ -70,17 +72,13 @@ export class IntelligentRetrievalService extends TableauBaseService<ChannelImage
     this.store.pipe(select((state) => state.generativeModel));
 
   getSearchQueries() {
-    return this._apiService.intelligentRetrievalControllerGetSearchQueries();
+    return this._searchQueryService.searchQueryControllerGetSearchQueries();
   }
 
   createSearchTextQuery(dto: CreateSearchTextQueryRequestDto) {
-    return this._apiService.intelligentRetrievalControllerCreateSearchTextQuery(
+    return this._searchQueryService.searchQueryControllerCreate(
       dto
     );
-  }
-
-  search(dto: SearchRequestDto) {
-    return this._apiService.intelligentRetrievalControllerTextSearch(dto);
   }
 
   private _blobToBase64(blob: Blob) {
@@ -104,8 +102,8 @@ export class IntelligentRetrievalService extends TableauBaseService<ChannelImage
       take(1),
       mergeMap((generativeModel) => {
         if (!generativeModel) {
-          return this._apiService
-            .intelligentRetrievalControllerGetSettings()
+          return this._settingsService
+            .settingsControllerGetSettings()
             .pipe(
               map((settings) => {
                 this.store.update((state) => ({
@@ -121,7 +119,7 @@ export class IntelligentRetrievalService extends TableauBaseService<ChannelImage
     );
   }
 
-  updateSettings(dto: UpdateSettingsRequestDto) {
+  upsertSettings(dto: UpdateSettingsRequestDto) {
     return this._apiService.intelligentRetrievalControllerGetImageCount().pipe(
       mergeMap((count) =>
         this._dialogService.customConfirmation({
@@ -135,16 +133,16 @@ export class IntelligentRetrievalService extends TableauBaseService<ChannelImage
       ),
       mergeMap(shouldUpdate => {
         if (shouldUpdate) {
-          return this._updateSettings(dto)
+          return this._upsertSettings(dto)
         }
         return EMPTY;
       })
     );
   }
 
-  private _updateSettings(dto: UpdateSettingsRequestDto) {
-    return this._apiService
-      .intelligentRetrievalControllerUpdateSettings(dto)
+  private _upsertSettings(dto: UpdateSettingsRequestDto) {
+    return this._settingsService
+      .settingsControllerUpsertSettings(dto)
       .pipe(
         tap((settings) => {
           this.store.update((state) => ({

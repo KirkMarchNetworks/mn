@@ -1,0 +1,29 @@
+{
+  "name": "project-one-server-modules-intelligent-retrieval-settings",
+  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/project-one/server/modules/intelligent-retrieval/settings/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/project-one/server/modules/intelligent-retrieval/settings",
+        "tsConfig": "libs/project-one/server/modules/intelligent-retrieval/settings/tsconfig.lib.json",
+        "packageJson": "libs/project-one/server/modules/intelligent-retrieval/settings/package.json",
+        "main": "libs/project-one/server/modules/intelligent-retrieval/settings/src/index.ts",
+        "assets": [
+          "libs/project-one/server/modules/intelligent-retrieval/settings/*.md"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/project-one/server/modules/intelligent-retrieval/settings/jest.config.ts"
+      }
+    }
+  }
+}

@@ -11,6 +11,9 @@ npx nx g @nx/js:lib --name=project-one-shared-api-client --directory=libs/projec
 Create Schema Library
 npx nx g @nx/js:lib --name=project-one-server-schema-one --directory=libs/project-one/server/schema-one --importPath=@mn/project-one/server/schema-one --bundler=none --linter=none --unitTestRunner=none  --minimal
 
+Remove a library
+npx nx g @nx/workspace:remove project-one-server-my-feature-lib
+
 # Mn
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>

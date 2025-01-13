@@ -24,7 +24,7 @@ import { UploadFormInterface } from './components/upload-form/models/upload-form
 })
 export class UploadComponent {
   tusEndpoint =
-    ServerRouting.intelligentRetrieval.children.multiUpload.absolutePath();
+    ServerRouting.intelligentRetrieval.children.upload.absolutePath();
   private _formData = signal<UploadFormInterface | null>(null);
   formData = this._formData.asReadonly();
   tusHeaderMetadata: Signal<MultiUploadRequestInterface | null> = computed(
