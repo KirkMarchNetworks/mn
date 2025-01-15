@@ -64,6 +64,7 @@ model/loginRequestDto.ts
 model/models.ts
 model/paginatedDto.ts
 model/paginatedResponseOfChannelImageWithDistanceEntity.ts
+model/paginatedResponseOfIntelligentRetrievalEventEntity.ts
 model/paginatedResponseOfRoleEntity.ts
 model/paginatedResponseOfTenantEntity.ts
 model/paginatedResponseOfUserEntity.ts

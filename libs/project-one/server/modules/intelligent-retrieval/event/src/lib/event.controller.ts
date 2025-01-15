@@ -2,9 +2,11 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PermissionNames, ServerRouting } from '@mn/project-one/shared/models';
 import { Auth, Permissions } from '@mn/project-one/server/guards';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { TenantId } from '@mn/project-one/server/decorators';
+import { ApiPaginatedResponse, Pagination, TenantId } from '@mn/project-one/server/decorators';
 import { CreateIntelligentRetrievalEventRequestDto } from './dtos/create-intelligent-retrieval-event-request.dto';
 import { EventService } from './event.service';
+import { IntelligentRetrievalEventEntity } from './entities/intelligent-retrieval-event.entity';
+import { PaginationInterface, UserEntitySearchable } from '@mn/project-one/shared/sort-search-page';
 
 const routes = ServerRouting.intelligentRetrieval.children.events.children;
 
@@ -18,16 +20,21 @@ export class EventController {
 
   constructor(private service: EventService) {}
 
-  @Permissions(PermissionNames.UploadImage)
-  @ApiOperation({ description: `Create a search query from text.` })
-  @Get(routes.create.path)
-  get(@TenantId() tenantId: string) {
-    return 'test';
+  @ApiPaginatedResponse(IntelligentRetrievalEventEntity)
+  @ApiOperation({ description: `Get all the Intelligent Retrieval Events for a tenant.`})
+  @Get()
+  async findAll(
+    @TenantId() tenantId: string,
+    @Pagination({
+      ...UserEntitySearchable
+    }) dto: PaginationInterface
+  ) {
+    return this.service.findAllPaginated(tenantId, dto);
   }
 
   @Permissions(PermissionNames.SearchImage)
   @ApiOperation({ description: `Create a new Intelligent Retrieval Event.` })
-  @Post(ServerRouting.intelligentRetrieval.children.events.path)
+  @Post(routes.create.path)
   create(
     @TenantId() tenantId: string,
     @Body() dto: CreateIntelligentRetrievalEventRequestDto

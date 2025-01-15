@@ -180,7 +180,7 @@ model SearchQuery {
 
 model IntelligentRetrievalEvents {
   id              String      @id @default(cuid())
-  tenantId        String      @unique
+  tenantId        String
   tenant          Tenant      @relation(fields: [tenantId], references: [id])
   searchQueryId   String
   searchQuery     SearchQuery @relation(fields: [searchQueryId], references: [id])

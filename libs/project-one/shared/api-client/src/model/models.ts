@@ -41,6 +41,7 @@ export * from './licensedProductEntity';
 export * from './loginRequestDto';
 export * from './paginatedDto';
 export * from './paginatedResponseOfChannelImageWithDistanceEntity';
+export * from './paginatedResponseOfIntelligentRetrievalEventEntity';
 export * from './paginatedResponseOfRoleEntity';
 export * from './paginatedResponseOfTenantEntity';
 export * from './paginatedResponseOfUserEntity';

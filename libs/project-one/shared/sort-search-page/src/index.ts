@@ -12,5 +12,6 @@ export * from './lib/models/sort-search.interface';
 
 // Searchables
 export * from './lib/searchables/channel-image-with-distance-entity.searchable';
+export * from './lib/searchables/intelligent-retrieval-event-entity.searchable';
 export * from './lib/searchables/role-entity.searchable';
 export * from './lib/searchables/user-entity.searchable';

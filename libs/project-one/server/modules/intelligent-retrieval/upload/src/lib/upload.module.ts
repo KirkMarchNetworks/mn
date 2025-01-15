@@ -4,23 +4,25 @@ import { UploadController } from './upload.controller';
 import { FileModule } from '@mn/project-one/server/modules/file';
 import { QueueModule } from '@mn/project-one/server/modules/queue';
 import {
-  ImageVectorQueueName,
-  VectorImageProcessor,
-} from './processors/vector-image.processor';
+  VectorizeImageQueueName,
+  VectorizeImageProcessor,
+} from './processors/vectorize-image.processor';
 import { EmbeddingModule } from '@mn/project-one/server/modules/embedding';
 import { FileUploadedListener } from './listeners/file-uploaded.listener';
 import { IntelligentRetrievalRepoModule } from '@mn/project-one/server/repos/intelligent-retrieval';
+import { SharedModule } from '@mn/project-one/server/modules/intelligent-retrieval/shared';
 
 @Module({
   controllers: [UploadController],
-  providers: [UploadService, FileUploadedListener, VectorImageProcessor],
+  providers: [UploadService, FileUploadedListener, VectorizeImageProcessor],
   exports: [UploadService],
   imports: [
+    SharedModule,
     FileModule,
     IntelligentRetrievalRepoModule,
 
     EmbeddingModule,
-    QueueModule.registerQueue(ImageVectorQueueName),
+    QueueModule.registerQueue(VectorizeImageQueueName),
   ],
 })
 export class UploadModule {}

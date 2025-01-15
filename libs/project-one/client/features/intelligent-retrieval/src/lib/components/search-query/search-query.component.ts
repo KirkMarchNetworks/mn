@@ -2,11 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  inject,
+  inject, input, Input,
   OnDestroy,
-  OnInit,
+  OnInit, output,
   signal,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconButton } from '@angular/material/button';
@@ -62,6 +62,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SearchQueryComponent implements OnInit, OnDestroy {
   @ViewChild('input') input: ElementRef<HTMLInputElement> | undefined;
   @ViewChild('auto') autoComplete: MatAutocomplete | undefined;
+
+  enableRouterUpdates = input(true);
+  valueUpdated = output<string|null>();
 
   formGroup = inject(NonNullableFormBuilder).group<
     ControlsOfType<CreateSearchTextQueryRequestDto>
@@ -178,29 +181,29 @@ export class SearchQueryComponent implements OnInit, OnDestroy {
         | SearchQueryEntity;
 
       if (value && typeof value !== 'string') {
-        this._router.navigate(['./'], {
-          relativeTo: this._route,
-          queryParams: {
-            [IntelligentRetrievalService.searchQueryParamName]: value.id,
-          },
-          queryParamsHandling: 'merge',
-          replaceUrl: true,
-        });
+        this._updateRouterOrSendOutput(value.id);
         this._resetFilterValuesToDefault();
-        // console.log('Updated the searchQuery param');
       }
 
       if (value === null) {
-        this._router.navigate(['./'], {
-          relativeTo: this._route,
-          queryParams: {
-            [IntelligentRetrievalService.searchQueryParamName]: null,
-          },
-          queryParamsHandling: 'merge',
-          replaceUrl: true,
-        });
+        this._updateRouterOrSendOutput(null);
         // console.log('Removed the searchQuery param');
       }
+    }
+  }
+
+  private _updateRouterOrSendOutput(value: string | null) {
+    if (this.enableRouterUpdates()) {
+      this._router.navigate(['./'], {
+        relativeTo: this._route,
+        queryParams: {
+          [IntelligentRetrievalService.searchQueryParamName]: value,
+        },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+    } else {
+      this.valueUpdated.emit(value);
     }
   }
 
@@ -222,7 +225,8 @@ export class SearchQueryComponent implements OnInit, OnDestroy {
   }
   private _updateValue(value: SearchQueryEntity) {
     this.filteredOptions.update(() => [value]);
-    this.formGroup.controls.query.setValue(value as unknown as string);
+    const valueString = value as unknown as string;
+    this.formGroup.controls.query.setValue(valueString);
     setTimeout(() => {
       if (this.autoComplete) {
         this.autoComplete.options.first.select();

@@ -3,7 +3,6 @@
 
     <p class="mb-2"><strong>Create a new Intelligent Retrieval Event</strong></p>
     <p class="mb-4">Whenever an image is uploaded and embedded into a vector, it will be run against all your events, if the similarity score is within range, a notification will be sent out.</p>
-    <lib-intelligent-retrieval-search-query></lib-intelligent-retrieval-search-query>
     <mat-form-field>
       <mat-label i18n>Event Name</mat-label>
       <input matInput type="text" [formControl]="formGroup.controls.name">
@@ -12,10 +11,20 @@
         An event name is required.
       </mat-error>
     </mat-form-field>
+    <lib-intelligent-retrieval-search-query [enableRouterUpdates]="false" (valueUpdated)="searchQueryUpdated($event)"></lib-intelligent-retrieval-search-query>
+
+    <div class="label-container">
+      <mat-label>Minimum Similarity Score (%)</mat-label>
+      <mat-label>{{slider.value}}</mat-label>
+    </div>
+
     <mat-slider min="1" max="100" step="1" showTickMarks discrete>
-      <input matSliderThumb [formControl]="formGroup.controls.similarityScore">
+      <input #slider matSliderThumb [formControl]="formGroup.controls.similarityScore">
     </mat-slider>
-    <button i18n mat-raised-button color="primary" type="submit">Save</button>
+
+    <div class="mt-2">
+      <button i18n mat-raised-button color="primary" type="submit">Create</button>
+    </div>
   </form>
 
 </div>

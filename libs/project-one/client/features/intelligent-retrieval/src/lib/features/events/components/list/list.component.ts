@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableauComponent, TableauInput } from '@mn/project-one/client/components/tableau';
-import { ChannelImageWithDistanceEntity } from '@mn/project-one/shared/api-client';
-import { ImageComponent } from '../../../search/components/image/image.component';
-import { SearchQueryComponent } from '../../../../components/search-query/search-query.component';
-import { ChannelImageWithDistanceEntitySearchable } from '@mn/project-one/shared/sort-search-page';
-import { IntelligentRetrievalService } from '../../../../services/intelligent-retrieval.service';
+import { IntelligentRetrievalEventEntity } from '@mn/project-one/shared/api-client';
+import { IntelligentRetrievalEventEntitySearchable } from '@mn/project-one/shared/sort-search-page';
 import { ClientRouting } from '@mn/project-one/shared/models';
+import { IntelligentRetrievalEventService } from '../../services/intelligent-retrieval-event.service';
+import { AddButtonComponent } from './components/add-button.component';
 
 @Component({
   selector: 'lib-list',
@@ -16,100 +15,66 @@ import { ClientRouting } from '@mn/project-one/shared/models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent {
-  tableau = new TableauInput<ChannelImageWithDistanceEntity>({
+  tableau = new TableauInput<IntelligentRetrievalEventEntity>({
     columns: [
       {
         columnDef: 'id',
         header: $localize`ID`,
-        cell: element => element.id,
+        cell: (element) => element.id,
         limitCellLength: 5,
-        hide: true
+        hide: true,
       },
       {
-        columnDef: 'fileName',
-        header: $localize`Image`,
-        cell: element => element.fileName,
-        cellComponent: {
-          component: ImageComponent,
-          input: element => element.fileName
-        }
+        columnDef: 'name',
+        header: $localize`Name`,
+        cell: (element) => element.name,
       },
       {
-        columnDef: 'distance',
+        columnDef: 'originalQuery',
+        header: $localize`Query`,
+        cell: (element) => {
+          const originalQuery = element.searchQuery.originalQuery;
+          if (originalQuery) {
+            return originalQuery;
+          }
+          return '';
+        },
+        sortable: {
+          key: 'searchQuery.originalQuery',
+        },
+        searchable: {
+          key: 'searchQuery.originalQuery',
+        },
+      },
+      {
+        columnDef: 'similarityScore',
         header: $localize`Similarity`,
-        cell: element => element.timestamp,
-        sortable: {
-          key: 'distance'
-        },
+        cell: (element) => element.similarityScore.toString(),
       },
       {
-        columnDef: 'timestamp',
-        header: $localize`Timestamp`,
-        cell: element => element.timestamp,
-        searchable: {
-          key: 'timestamp'
-        }
-      },
-      {
-        columnDef: 'deviceId',
-        header: $localize`Device I.D`,
-        limitCellLength: 5,
-        cell: element => element.channel.device.id,
-        sortable: {
-          key: 'channel.device.id'
-        },
-        searchable: {
-          key: 'channel.device.id'
-        },
-        hide: true
-      },
-      {
-        columnDef: 'deviceName',
-        header: $localize`Device Name`,
-        cell: element => element.channel.device.name,
-        searchable: {
-          key: 'channel.device.name'
-        }
-      },
-      {
-        columnDef: 'channelId',
-        header: $localize`Channel I.D`,
-        cell: element => element.channel.id,
-        limitCellLength: 5,
-        showTooltip: element => element.channel.id.length > 5,
-        searchable: {
-          key: 'channel.id'
-        }
-      },
-      {
-        columnDef: 'channelName',
-        header: $localize`Channel Name`,
-        cell: element => element.channel.name,
-        searchable: {
-          key: 'channel.name'
-        }
+        columnDef: 'createdAt',
+        header: $localize`Created At`,
+        cell: (element) => element.createdAt,
+        hide: true,
       },
     ],
     selection: {
-      canSelect: false
+      canSelect: false,
     },
-    menuItemStart: SearchQueryComponent,
-    sortSearch: ChannelImageWithDistanceEntitySearchable,
-    service: inject(IntelligentRetrievalService),
-    additionalQueryParams: {
-      [ IntelligentRetrievalService.searchQueryParamName ]: undefined
-    },
+    menuItemStart: AddButtonComponent,
+    sortSearch: IntelligentRetrievalEventEntitySearchable,
+    service: inject(IntelligentRetrievalEventService),
     paginator: {
-      pageSize: 10
+      pageSize: 10,
     },
     actions: [
       {
         show: () => true,
-        title: item => {
-          return `View Profile of`
+        title: (item) => {
+          return `View Profile of`;
         },
-        route: item => ClientRouting.intelligentRetrieval.absolutePath()
+        route: (item) => ClientRouting.intelligentRetrieval.absolutePath(),
       },
-    ]
-  })
+    ],
+  });
 }

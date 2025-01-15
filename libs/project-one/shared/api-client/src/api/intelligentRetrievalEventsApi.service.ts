@@ -22,6 +22,8 @@ import { AuthControllerCreateUser401Response } from '../model/authControllerCrea
 import { CreateIntelligentRetrievalEventRequestDto } from '../model/createIntelligentRetrievalEventRequestDto';
 // @ts-ignore
 import { IntelligentRetrievalEventEntity } from '../model/intelligentRetrievalEventEntity';
+// @ts-ignore
+import { PaginatedResponseOfIntelligentRetrievalEventEntity } from '../model/paginatedResponseOfIntelligentRetrievalEventEntity';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -161,7 +163,7 @@ export class IntelligentRetrievalEventsApiService {
             }
         }
 
-        let localVarPath = `/api/intelligent-retrieval/events/events`;
+        let localVarPath = `/api/intelligent-retrieval/events/create`;
         return this.httpClient.request<IntelligentRetrievalEventEntity>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
@@ -178,14 +180,36 @@ export class IntelligentRetrievalEventsApiService {
 
     /**
      * 
-     * **Required Permissions:** *upload_image*&lt;br/&gt;Create a search query from text.
+     * Get all the Intelligent Retrieval Events for a tenant.
+     * @param take 
+     * @param skip 
+     * @param sort 
+     * @param search 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public eventControllerGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public eventControllerGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public eventControllerGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
-    public eventControllerGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public eventControllerFindAll(take?: number, skip?: number, sort?: string, search?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PaginatedResponseOfIntelligentRetrievalEventEntity>;
+    public eventControllerFindAll(take?: number, skip?: number, sort?: string, search?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PaginatedResponseOfIntelligentRetrievalEventEntity>>;
+    public eventControllerFindAll(take?: number, skip?: number, sort?: string, search?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PaginatedResponseOfIntelligentRetrievalEventEntity>>;
+    public eventControllerFindAll(take?: number, skip?: number, sort?: string, search?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (take !== undefined && take !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>take, 'take');
+        }
+        if (skip !== undefined && skip !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>skip, 'skip');
+        }
+        if (sort !== undefined && sort !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>sort, 'sort');
+        }
+        if (search !== undefined && search !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>search, 'search');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -230,10 +254,11 @@ export class IntelligentRetrievalEventsApiService {
             }
         }
 
-        let localVarPath = `/api/intelligent-retrieval/events/create`;
-        return this.httpClient.request<string>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/api/intelligent-retrieval/events`;
+        return this.httpClient.request<PaginatedResponseOfIntelligentRetrievalEventEntity>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

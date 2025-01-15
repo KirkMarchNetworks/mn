@@ -12,6 +12,7 @@ import type { ControlsOfType } from '@mn/project-one/client/models';
 import { CreateIntelligentRetrievalEventRequestDto } from '@mn/project-one/shared/api-client';
 import { IntelligentRetrievalService } from '../../../../services/intelligent-retrieval.service';
 import { Subscription } from 'rxjs';
+import { IntelligentRetrievalEventService } from '../../services/intelligent-retrieval-event.service';
 
 @Component({
   selector: 'lib-project-one-client-intelligent-retrieval-events-create',
@@ -34,7 +35,7 @@ import { Subscription } from 'rxjs';
 })
 export class CreateComponent implements OnDestroy {
 
-  private readonly _service = inject(IntelligentRetrievalService);
+  private readonly _service = inject(IntelligentRetrievalEventService);
   private readonly _subscriptions = new Subscription();
 
   formGroup = inject(NonNullableFormBuilder).group<
@@ -54,6 +55,12 @@ export class CreateComponent implements OnDestroy {
     }),
   });
 
+  searchQueryUpdated(value: string|null) {
+    this.formGroup.patchValue({
+      searchQueryId: value ?? ''
+    })
+  }
+
   ngOnDestroy() {
     this._subscriptions.unsubscribe();
   }
@@ -63,12 +70,8 @@ export class CreateComponent implements OnDestroy {
       return;
     }
 
-    // const { generativeModel } = this.formGroup.getRawValue();
-    //
-    // if (this._intialValue !== generativeModel) {
-    //   this._subscriptions.add(
-    //     this.service.updateSettings(this.formGroup.getRawValue()).subscribe()
-    //   );
-    // }
+    this._subscriptions.add(
+      this._service.createEvent(this.formGroup.getRawValue()).subscribe()
+    );
   }
 }

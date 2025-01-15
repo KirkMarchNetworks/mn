@@ -3,9 +3,9 @@ import { OnEvent } from '@nestjs/event-emitter';
 import { FileUploadedEvent } from '@mn/project-one/server/events';
 import { IntelligentRetrievalRepo } from '@mn/project-one/server/repos/intelligent-retrieval';
 import {
-  ImageVectorQueueType,
-  InjectImageVectorQueue,
-} from '../processors/vector-image.processor';
+  VectorizeImageQueueType,
+  InjectVectorizeImageQueue,
+} from '../processors/vectorize-image.processor';
 import {
   generateFileId,
   generateId,
@@ -25,7 +25,7 @@ export class FileUploadedListener {
   constructor(
     private repo: IntelligentRetrievalRepo,
     private fileService: FileService,
-    @InjectImageVectorQueue() private imageVectorQueue: ImageVectorQueueType
+    @InjectVectorizeImageQueue() private imageVectorQueue: VectorizeImageQueueType
   ) {}
 
   @OnEvent(multiUploadEventName)

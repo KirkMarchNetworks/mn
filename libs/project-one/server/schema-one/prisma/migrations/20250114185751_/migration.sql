@@ -229,9 +229,6 @@ CREATE UNIQUE INDEX "Permission_name_key" ON "Permission"("name");
 CREATE UNIQUE INDEX "ChannelImage_fileName_key" ON "ChannelImage"("fileName");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "IntelligentRetrievalEvents_tenantId_key" ON "IntelligentRetrievalEvents"("tenantId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "IntelligentRetrievalSettings_tenantId_key" ON "IntelligentRetrievalSettings"("tenantId");
 
 -- AddForeignKey

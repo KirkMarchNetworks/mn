@@ -11,44 +11,46 @@ import { FileService } from '@mn/project-one/server/modules/file';
 import { convertFileNameToStoragePath } from '../models/convert-file-name-to-storage-path';
 import {
   EmbeddingService,
-  TitanEmbeddingMultiModelV1Interface,
 } from '@mn/project-one/server/modules/embedding';
 import { convertImageStreamToBase64 } from '../models/convert-image-to-base64';
 import { ChannelImageWithTenantType } from '../models/channel-image-with-tenant.type';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const sharp = require('sharp');
+import {
+  EventVectorQueueType,
+  InjectEventVectorQueue
+} from '@mn/project-one/server/modules/intelligent-retrieval/shared';
 
-export const ImageVectorQueueName = 'ImageVectorQueue';
+export const VectorizeImageQueueName = 'VectorizeImageQueue';
 
-export const InjectImageVectorQueue = (): ParameterDecorator =>
-  InjectQueue(ImageVectorQueueName);
+export const InjectVectorizeImageQueue = (): ParameterDecorator =>
+  InjectQueue(VectorizeImageQueueName);
 
-export type ImageVectorQueueType = Queue<
+export type VectorizeImageQueueType = Queue<
   ChannelImageWithTenantType,
   boolean,
   string
 >;
-export type ImageVectorJobType = Job<
+export type VectorizeImageJobType = Job<
   ChannelImageWithTenantType,
   boolean,
   string
 >;
 
-@Processor(ImageVectorQueueName, {
+@Processor(VectorizeImageQueueName, {
   concurrency: 3,
 })
-export class VectorImageProcessor extends WorkerHost {
-  private readonly logger = new Logger(VectorImageProcessor.name);
+export class VectorizeImageProcessor extends WorkerHost {
+  private readonly logger = new Logger(VectorizeImageProcessor.name);
 
   constructor(
     private fileService: FileService,
     private embeddingService: EmbeddingService,
-    private repo: IntelligentRetrievalRepo
+    private repo: IntelligentRetrievalRepo,
+    @InjectEventVectorQueue() private eventVectorQueue: EventVectorQueueType
   ) {
     super();
   }
 
-  async process(job: ImageVectorJobType) {
+  async process(job: VectorizeImageJobType) {
     const { tenantId, id, fileName } = job.data;
 
     const path = convertFileNameToStoragePath(tenantId, fileName);
@@ -62,6 +64,7 @@ export class VectorImageProcessor extends WorkerHost {
 
       if (res) {
         await this.repo.addVectorToImage(id, res.embedding);
+        this.eventVectorQueue.add()
       } else {
         throw new Error('');
       }
